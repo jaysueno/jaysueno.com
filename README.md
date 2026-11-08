@@ -8,6 +8,8 @@ and never read; a trigger hands the row to a function that emails me.
 
 ## What it does
 
+![The jaysueno.com home page at 1440 pixels wide: an overhead photo of Jay paddling a surfboard in dark water, under the headline "Allow me to reintroduce myself."](docs/img/home-1440.png)
+
 A static personal site built with [Astro](https://astro.build) 7: 25 pages, from the home page
 and an about page to a resume, a numbers page, work pages and four essays.
 
@@ -96,6 +98,10 @@ space, every photo a page asks for exists, and no import reaches outside this fo
 commit dates.
 
 ## How it works
+
+![The build in five columns: pages, data, essays and photos go through astro build into 25 HTML pages, rss.xml, resume.json and a sitemap in dist/, then the postbuild step adds Markdown twins and llms.txt and fails on any em dash.](docs/img/build.svg)
+
+![The lead form in five steps: the public anon key can only insert a consented lead, a trigger posts the row with a webhook secret from Vault, the lead-notify Edge Function checks it and sends two emails through Resend, and the anon key can never read a lead.](docs/img/lead-form.svg)
 
 ```
  src/pages/*.astro   src/data/*.ts   src/content/essays/*.md   src/assets/photos/*.jpg

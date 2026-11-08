@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="t d">
+<title id="t">How the site is built</title>
+<desc id="d">The build in five columns: pages, data, essays and photos go through astro build, which writes 25 HTML pages, rss.xml, resume.json and a sitemap to dist/, then scripts/postbuild-agents.mjs adds typographic quotes, Markdown twins and llms.txt and fails on any em dash, and the static files are served as is.</desc>
+<rect x="0" y="0" width="1200" height="470" fill="#EDE7DC"/><rect x="1" y="1" width="1198" height="468" fill="#001B3B"/>
+<text x="40" y="62" font-family="Georgia, 'Playfair Display', serif" font-size="34" fill="#F2EDE2">How the site is built</text>
+<text x="40" y="94" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#D8D3CA">Plain files in, static files out.</text>
+<text x="40" y="136" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#D8D3CA">Plain files</text>
+<text x="300" y="136" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#D8D3CA">Build</text>
+<text x="520" y="136" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#D8D3CA">Output</text>
+<text x="720" y="136" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#D8D3CA">Postbuild</text>
+<text x="990" y="136" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" fill="#D8D3CA">Served</text>
+<rect x="40" y="150" width="230" height="54" fill="#EDE7DC"/><rect x="41" y="151" width="228" height="52" fill="#001B3B"/>
+<text x="56" y="183" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">src/pages/ (*.astro)</text>
+<rect x="276" y="175" width="5" height="4" fill="#8C5348"/><polygon points="280,168 294,177 280,186" fill="#8C5348"/>
+<rect x="40" y="222" width="230" height="54" fill="#EDE7DC"/><rect x="41" y="223" width="228" height="52" fill="#001B3B"/>
+<text x="56" y="255" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">src/data/ (*.ts)</text>
+<rect x="276" y="247" width="5" height="4" fill="#8C5348"/><polygon points="280,240 294,249 280,258" fill="#8C5348"/>
+<rect x="40" y="294" width="230" height="54" fill="#EDE7DC"/><rect x="41" y="295" width="228" height="52" fill="#001B3B"/>
+<text x="56" y="327" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">src/content/essays/ (*.md)</text>
+<rect x="276" y="319" width="5" height="4" fill="#8C5348"/><polygon points="280,312 294,321 280,330" fill="#8C5348"/>
+<rect x="40" y="366" width="230" height="54" fill="#EDE7DC"/><rect x="41" y="367" width="228" height="52" fill="#001B3B"/>
+<text x="56" y="399" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">src/assets/photos/ (*.jpg)</text>
+<rect x="276" y="391" width="5" height="4" fill="#8C5348"/><polygon points="280,384 294,393 280,402" fill="#8C5348"/>
+<rect x="300" y="150" width="190" height="270" fill="#EDE7DC"/><rect x="301" y="151" width="188" height="268" fill="#001B3B"/>
+<text x="318" y="188" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">astro build</text>
+<text x="318" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">@astrojs/sitemap</text>
+<text x="318" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA"></text>
+<text x="318" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">sharp makes AVIF</text>
+<text x="318" y="286" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">and WebP from</text>
+<text x="318" y="308" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">each photo</text>
+<rect x="520" y="150" width="170" height="270" fill="#EDE7DC"/><rect x="521" y="151" width="168" height="268" fill="#001B3B"/>
+<text x="538" y="188" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">dist/</text>
+<text x="538" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">25 HTML pages</text>
+<text x="538" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">rss.xml</text>
+<text x="538" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">resume.json</text>
+<text x="538" y="286" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">sitemap</text>
+<rect x="720" y="150" width="240" height="270" fill="#EDE7DC"/><rect x="721" y="151" width="238" height="268" fill="#001B3B"/>
+<text x="738" y="188" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">postbuild</text>
+<text x="738" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">postbuild-agents.mjs</text>
+<text x="738" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA"></text>
+<text x="738" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">typographic quotes</text>
+<text x="738" y="286" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">an index.md twin next</text>
+<text x="738" y="308" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">to every page but 404</text>
+<text x="738" y="330" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">llms.txt from the pages</text>
+<text x="738" y="352" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">fails on any em dash</text>
+<rect x="990" y="150" width="170" height="270" fill="#EDE7DC"/><rect x="991" y="151" width="168" height="268" fill="#001B3B"/>
+<text x="1008" y="188" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">Static files</text>
+<text x="1008" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">served as is</text>
+<rect x="496" y="283" width="5" height="4" fill="#8C5348"/><polygon points="500,276 514,285 500,294" fill="#8C5348"/>
+<rect x="696" y="283" width="5" height="4" fill="#8C5348"/><polygon points="700,276 714,285 700,294" fill="#8C5348"/>
+<rect x="966" y="283" width="5" height="4" fill="#8C5348"/><polygon points="970,276 984,285 970,294" fill="#8C5348"/>
+</svg>

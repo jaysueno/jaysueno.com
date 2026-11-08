@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="t d">
+<title id="t">The lead form</title>
+<desc id="d">The lead form in five steps: the browser inserts a consented lead with the public anon key, row-level security allows insert only, trigger m0002 posts the row with a webhook secret header, the lead-notify Edge Function checks it and sends two emails through Resend; the webhook secret lives in Vault and in the function secrets, and the anon key cannot read a lead.</desc>
+<rect x="0" y="0" width="1200" height="500" fill="#EDE7DC"/><rect x="1" y="1" width="1198" height="498" fill="#001B3B"/>
+<text x="40" y="62" font-family="Georgia, 'Playfair Display', serif" font-size="34" fill="#F2EDE2">The lead form</text>
+<text x="40" y="94" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="16" fill="#D8D3CA">The public key can insert a lead. It can never read one.</text>
+<rect x="40" y="128" width="188.8" height="178" fill="#EDE7DC"/><rect x="41" y="129" width="186.8" height="176" fill="#001B3B"/>
+<text x="58" y="166" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">Lead form</text>
+<text x="58" y="198" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">on the site, sent</text>
+<text x="58" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">with the public</text>
+<text x="58" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">anon key</text>
+<rect x="234.8" y="215" width="19" height="4" fill="#8C5348"/><polygon points="252.8,208 266.8,217 252.8,226" fill="#8C5348"/>
+<rect x="272.8" y="128" width="188.8" height="178" fill="#EDE7DC"/><rect x="273.8" y="129" width="186.8" height="176" fill="#001B3B"/>
+<text x="290.8" y="166" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">jaysueno_leads</text>
+<text x="290.8" y="198" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">row-level security:</text>
+<text x="290.8" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">anon can INSERT a</text>
+<text x="290.8" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">consented lead with</text>
+<text x="290.8" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">status set to new</text>
+<rect x="467.6" y="215" width="19" height="4" fill="#8C5348"/><polygon points="485.6,208 499.6,217 485.6,226" fill="#8C5348"/>
+<rect x="505.6" y="128" width="188.8" height="178" fill="#EDE7DC"/><rect x="506.6" y="129" width="186.8" height="176" fill="#001B3B"/>
+<text x="523.6" y="166" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">Trigger m0002</text>
+<text x="523.6" y="198" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">on INSERT, pg_net</text>
+<text x="523.6" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">posts the row with</text>
+<text x="523.6" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">an x-webhook-secret</text>
+<text x="523.6" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">header</text>
+<rect x="700.4" y="215" width="19" height="4" fill="#8C5348"/><polygon points="718.4,208 732.4,217 718.4,226" fill="#8C5348"/>
+<rect x="738.4" y="128" width="188.8" height="178" fill="#EDE7DC"/><rect x="739.4" y="129" width="186.8" height="176" fill="#001B3B"/>
+<text x="756.4" y="166" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">lead-notify</text>
+<text x="756.4" y="198" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">Edge Function.</text>
+<text x="756.4" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">Checks the header,</text>
+<text x="756.4" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">then sends through</text>
+<text x="756.4" y="264" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">Resend</text>
+<rect x="933.2" y="215" width="19" height="4" fill="#8C5348"/><polygon points="951.2,208 965.2,217 951.2,226" fill="#8C5348"/>
+<rect x="971.2" y="128" width="188.8" height="178" fill="#EDE7DC"/><rect x="972.2" y="129" width="186.8" height="176" fill="#001B3B"/>
+<text x="989.2" y="166" font-family="Georgia, 'Playfair Display', serif" font-size="22" fill="#F2EDE2">Two emails</text>
+<text x="989.2" y="198" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">an alert to the</text>
+<text x="989.2" y="220" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">owner, and a short</text>
+<text x="989.2" y="242" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">reply to the visitor</text>
+<rect x="365.2" y="306" width="4" height="46" fill="#8C5348"/>
+<rect x="132.4" y="348" width="234.8" height="4" fill="#8C5348"/>
+<rect x="132.4" y="320" width="4" height="32" fill="#8C5348"/>
+<polygon points="125.4,321 134.4,307 143.4,321" fill="#8C5348"/>
+<polygon points="237.8,340 240.8,337 263.8,360 260.8,363" fill="#F2EDE2"/><polygon points="260.8,337 263.8,340 240.8,363 237.8,360" fill="#F2EDE2"/>
+<text x="40" y="390" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">The anon key cannot read,</text>
+<text x="40" y="412" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">update or delete a lead. No policy allows it.</text>
+<rect x="598" y="306" width="4" height="34" fill="#8C5348"/>
+<rect x="505.6" y="340" width="188.8" height="118" fill="#8C5348"/><rect x="507.6" y="342" width="184.8" height="114" fill="#001B3B"/>
+<text x="523.6" y="370" font-family="Georgia, 'Playfair Display', serif" font-size="19" fill="#F2EDE2">Vault</text>
+<text x="523.6" y="396" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">holds the webhook</text>
+<text x="523.6" y="417" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">secret the trigger</text>
+<text x="523.6" y="438" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">sends</text>
+<rect x="830.8" y="306" width="4" height="34" fill="#8C5348"/>
+<rect x="738.4" y="340" width="188.8" height="118" fill="#8C5348"/><rect x="740.4" y="342" width="184.8" height="114" fill="#001B3B"/>
+<text x="756.4" y="370" font-family="Georgia, 'Playfair Display', serif" font-size="19" fill="#F2EDE2">Function secrets</text>
+<text x="756.4" y="396" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">Resend key, alert</text>
+<text x="756.4" y="417" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">inbox, the same</text>
+<text x="756.4" y="438" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">webhook secret</text>
+<text x="971.2" y="370" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#F2EDE2">Secrets never ship</text>
+<text x="971.2" y="392" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">in the repo or the</text>
+<text x="971.2" y="414" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" fill="#D8D3CA">page bundle.</text>
+</svg>
