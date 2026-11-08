@@ -1,0 +1,34 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import { PERSON_ID } from "../data/identity";
+const podcast = { "@type": "PodcastEpisode", name: "Mindset, Mental Health, and Redefining Yourself with Jay Sueno", url: "https://open.spotify.com/episode/4Mm8FCpU3TMbSyQeyWR7hE", partOfSeries: { "@type": "PodcastSeries", name: "The Brainstream Podcast" }, about: { "@id": PERSON_ID } };
+const analytics = { "@type": "PodcastEpisode", name: "How to Get an Analytics Job at Amazon", url: "https://www.youtube.com/watch?v=OSf-MRyh1cg&t=855s", datePublished: "2021-03-26", partOfSeries: { "@type": "PodcastSeries", name: "How to Get an Analytics Job" }, about: { "@id": PERSON_ID } };
+const wild = { "@type": "PodcastEpisode", name: "Episode 51: Thank You Surfing! with Jay Sueno, Co-Founder of Mama P", url: "https://open.spotify.com/episode/208XfdpqL6W9BGklRVFvz9", datePublished: "2020-08-31", partOfSeries: { "@type": "PodcastSeries", name: "The Occupation Wild Podcast" }, about: { "@id": PERSON_ID } };
+---
+<Site title="Heard and seen" description="Jay Sueno on The Brainstream Podcast, How to Get an Analytics Job, Occupation Wild, and Global Nomad Pass, and where Vultun and MamaP have been written about." path="/press/" created="2026-11-07" updated="2026-11-07" nodes={[podcast, analytics, wild]}>
+  <PageHead kicker="Heard and seen" title="Three podcasts and a video. That's the list so far." lead="If you have a show and want to talk about sobriety at forty, building on an island, or running a company with AI agents, say hello." />
+  <section class="band axis" aria-label="Appearances">
+    <ul class="press">
+      <li><p class="caption quiet">The Brainstream Podcast, on Spotify</p><h2 class="title"><a href="https://open.spotify.com/episode/4Mm8FCpU3TMbSyQeyWR7hE">Mindset, Mental Health, and Redefining Yourself with Jay Sueno</a></h2><p class="landing">"I wanted to prove to myself that I wasn't old and that my brain can still work."</p></li>
+      <li><p class="caption quiet">Global Nomad Pass, on YouTube. January 7, 2025.</p><h2 class="title"><a href="https://www.youtube.com/watch?v=QQn2gsOPYWU">Why Everyone is Talking About this Biohacking Studio in Siargao</a></h2></li>
+      <li><p class="caption quiet">How to Get an Analytics Job, on YouTube. March 26, 2021.</p><h2 class="title"><a href="https://www.youtube.com/watch?v=OSf-MRyh1cg&t=855s">How to Get an Analytics Job at Amazon</a></h2><p class="small quiet">Right after I landed the job: how I built my skills, my portfolio, and my network.</p></li>
+      <li><p class="caption quiet">The Occupation Wild Podcast, on Spotify. August 31, 2020.</p><h2 class="title"><a href="https://open.spotify.com/episode/208XfdpqL6W9BGklRVFvz9">Thank You Surfing!</a></h2><p class="small quiet">Episode 51, from my years as co-founder of MamaP.</p></li>
+    </ul>
+  </section>
+  <section class="band band--tight axis flow" aria-labelledby="co-h">
+    <h2 id="co-h" class="kicker">About the companies</h2>
+    <ul class="press">
+      <li><p class="caption quiet">Tatler Asia. July 14, 2026.</p><h3 class="title"><a href="https://www.tatlerasia.com/lifestyle/travel/yoga-and-pilates-studios-for-ph-travel">Yoga and Pilates studios for travel in the Philippines</a></h3><p class="small quiet">Names Feral Pilates.</p></li>
+      <li><p class="caption quiet">Inquirer Lifestyle. September 6, 2026.</p><h3 class="title"><a href="https://lifestyle.inquirer.net/580593/unique-siargao-activities/">Unique Siargao activities</a></h3><p class="small quiet">Names Feral Pilates and the Vultun spa.</p></li>
+      <li><p class="caption quiet">Enspire Magazine. October 21, 2020.</p><h3 class="title"><a href="https://enspiremag.com/?p=17862">MamaP</a></h3><p class="small quiet">Names me as co-founder and CCO.</p></li>
+    </ul>
+    <p class="small"><a href="https://vultun.com/press/">Vultun's press page, with bios and numbers</a></p>
+  </section>
+</Site>
+<style>
+  .press { border-top: 1px solid var(--rule); }
+  .press li { padding-block: var(--s3); border-bottom: 1px solid var(--rule); }
+  .press li > * + * { margin-top: 0.4rem; }
+  .press a { text-decoration: none; } .press a:hover { text-decoration: underline; }
+</style>

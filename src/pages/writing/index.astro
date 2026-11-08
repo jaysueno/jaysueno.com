@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Subscribe from "../../components/Subscribe.astro";
+import Photo from "../../components/Photo.astro";
+import { fullDate, seed } from "../../data/writing";
+import { essayCovers } from "../../data/essay-covers";
+const essays = (await getCollection("essays")).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const covers = essayCovers;
+---
+<Site title="Writing" description="Essays by Jay Sueno on business, family, health, and becoming in Siargao. The Long Paddle, and The Seed." path="/writing/" created="2026-11-07" updated="2026-11-07">
+  <div class="paper">
+    <PageHead kicker="The Long Paddle" title="Field notes on business, family, health, and becoming in Siargao." lead="The paddle is the part nobody films. This is where I write it down.">
+      <Subscribe source="writing-top" />
+    </PageHead>
+    <section class="axis band band--tight" aria-label="Essays">
+      <ol class="essays">
+        {essays.map((e) => (
+          <li><a href={`/writing/${e.id}/`}>
+            <span class="essays__copy">
+              <span class="caption quiet num">{fullDate(e.data.date)}</span>
+              <span class="story essays__t">{e.data.title}</span>
+              {e.data.dek && <span class="lead">{e.data.dek}</span>}
+            </span>
+            {covers[e.id] && <span class="essays__photo"><Photo id={covers[e.id].id} alt={covers[e.id].alt} position={covers[e.id].position} sizes="(min-width: 760px) 22rem, 100vw" widths={[480, 800, 1200]} /></span>}
+          </a></li>
+        ))}
+      </ol>
+      <p class="small quiet essays__late">The next one is on seven years sober. It's on the way.</p>
+    </section>
+    <section id="the-seed" class="axis band band--tight flow" aria-labelledby="seed-h">
+      <p class="kicker">The Seed</p>
+      <h2 id="seed-h" class="title">The weekly letter from Vultun. Small reads, deep roots.</h2>
+      <ol class="seed">
+        {seed.map((v) => (
+          <li><a href={`https://vultun.com/journal/the-seed/the-seed-vol-${v.word}/`}>
+            <span class="caption quiet num">Vol. {v.n}. {v.date}</span>
+            <span class="seed__t">{v.title}</span>
+            <span class="small">{v.line}</span>
+          </a></li>
+        ))}
+      </ol>
+      <p class="caption quiet">Vols. 2 and 4 were written by Allegra De Borja and Chrisa Rhythm, and live on vultun.com.</p>
+    </section>
+    <section class="axis band band--tight flow measure" aria-labelledby="long-h">
+      <p class="kicker">The long one</p>
+      <h2 id="long-h" class="title"><a href="https://vultun.com/journal/editorial/vultun-creation-story-a-siargao-wellness-journey/">The Vultun Creation Story</a></h2>
+      <p class="small">About 5,000 words. The bench, the silence, the boot camp, and why I started the company. September 2024.</p>
+    </section>
+  </div>
+</Site>
+<style>
+  .essays, .seed { border-top: 1px solid var(--rule); }
+  .essays li, .seed li { border-bottom: 1px solid var(--rule); }
+  .essays a { display: grid; gap: var(--s3) var(--s5); padding-block: var(--s4); text-decoration: none; align-items: center; }
+  .essays__copy { display: grid; gap: var(--s1); }
+  .essays__photo { display: block; overflow: hidden; }
+  .essays__photo :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover; transition: transform 600ms var(--ease); }
+  .essays a:hover .essays__photo :global(img) { transform: scale(1.02); }
+  @media (min-width: 760px) { .essays a { grid-template-columns: minmax(0, 1fr) 22rem; } }
+  .essays__t { transition: color 200ms var(--ease); }
+  .essays a:hover .essays__t { color: var(--color-accentSecondary); }
+  .essays__late { margin-top: var(--s3); }
+  .seed { columns: 2 22rem; column-gap: var(--s5); border-top: 0; }
+  .seed li { break-inside: avoid; border-bottom: 1px solid var(--rule); }
+  .seed a { display: grid; gap: 0.15rem; padding-block: var(--s2); text-decoration: none; }
+  .seed__t { font-family: var(--display); font-size: var(--t-lead); line-height: 1.2; }
+</style>

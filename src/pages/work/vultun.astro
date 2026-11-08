@@ -1,0 +1,55 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Fig from "../../components/Fig.astro";
+import Ledger from "../../components/Ledger.astro";
+import { business } from "../../data/numbers";
+import { VULTUN_ORG_ID } from "../../data/identity";
+import { utm } from "../../data/work-pages";
+import c2s from "../../data/core-to-surf.json";
+const peso = (n: number) => `₱${n.toLocaleString("en-US")}`;
+const save = c2s.totalValue - c2s.prices.public;
+const pct = Math.round((save / c2s.totalValue) * 100);
+const start = new Date(`${c2s.dates.start}T12:00:00+08:00`);
+const month = start.toLocaleString("en-US", { month: "long", timeZone: "Asia/Manila" });
+const dates = `${month} ${start.getDate()} to ${new Date(`${c2s.dates.end}T12:00:00+08:00`).getDate()}, ${start.getFullYear()}`;
+---
+<Site title="Vultun" description="Vultun is a wellness group of ten business units on two sites in Siargao, Philippines, founded by Jay Sueno. 13,543 people in the books as of October 2026." path="/work/vultun/" created="2026-11-07" updated="2026-11-07" nodes={[{ "@type": "Organization", "@id": VULTUN_ORG_ID, name: "Vultun", url: "https://vultun.com" }]}>
+  <PageHead kicker="The work" title="Vultun" lead="Vultun is a human potential company. We help people reach their potential through our services, our spaces and our products." />
+  <Fig id="vultun-meeting" ratio="16-9" alt="Jay, seen from behind in a white T-shirt with his daughter leaning on his back, in a meeting with two men at a low wooden table in the open-air lounge at Malinao." caption="At work at Malinao, with my daughter on my back. September 8, 2026." />
+  <section class="band axis cols cols--text-photo">
+    <div class="flow measure">
+      <p class="kicker">Why it exists</p>
+      <h2 class="story lines"><span>The seed is spiritual.</span><span>The container is science.</span></h2>
+      <p>I went to a spa in Uluwatu in the spring of 2022 and said, "This is what I'm going to build." I had been sober almost three years. Everything that pulled me out was a practice somebody could teach: breath, cold, movement, massage, the ocean. I wanted a home for those, with the science underneath.</p>
+      <p>The spa and surf home opened at Jacking Horse in 2023. Vultun, Inc. was incorporated on October 18, 2023. Feral Pilates opened in 2025. Physician-led IV therapy and aesthetics opened at Malinao on September 5, 2026.</p>
+    </div>
+    <Fig id="work-spa" inset ratio="4-5" alt="A treatment room at the Vultun spa." widths={[480]} />
+  </section>
+  <section class="band band--tight axis flow"><h2 class="title">In numbers</h2><Ledger rows={business} /></section>
+  <section class="page--solid solid-terra band">
+    <div class="axis flow">
+      <p class="kicker">What it cost</p>
+      <h2 class="story lines"><span>The dream and the bill</span><span>can arrive on</span><span>the same afternoon.</span></h2>
+      <p class="lead lines"><span>Half-finished Pilates studio.</span><span>Contractors calling.</span><span>Bills and payroll.</span><span>Customers still to find.</span><span>Outside, waves and sunset.</span></p>
+      <p class="landing">At home, our daughter had been waiting all day.</p>
+    </div>
+  </section>
+  <section class="paper band" aria-labelledby="c2s-h">
+    <div class="axis flow">
+      <p class="kicker">Come see it</p>
+      <h2 id="c2s-h" class="story">{c2s.name}</h2>
+      <p class="title">{c2s.tagline}</p>
+      <p class="lead measure">{c2s.descriptor}, {c2s.byline}. {dates}. {c2s.seats.display}. When they are gone, the next group pays {peso(c2s.prices.next)}.</p>
+      <dl class="ledger">
+        <div class="ledger__row"><dt class="ledger__value">{peso(c2s.totalValue)}</dt><dd class="small">What the three days are worth, line by line.</dd></div>
+        <div class="ledger__row"><dt class="ledger__value">{peso(c2s.prices.public)}</dt><dd class="small">What you pay. You save {peso(save)}, or {pct}%. Siargao residents and Source members pay {peso(c2s.prices.resident)}.</dd></div>
+        <div class="ledger__row"><dt class="ledger__value">{peso(c2s.prices.deposit)}</dt><dd class="small">Holds your place. The balance is due February 12.</dd></div>
+      </dl>
+      <ul class="flow measure small guarantees" style="--flow: var(--s2)">{c2s.guarantees.map((g: string) => <li>{g}</li>)}</ul>
+      <p><a class="ask" href={utm("https://vultun.com/retreat/core-to-surf/", "work-vultun")}>Reserve yours</a></p>
+    </div>
+  </section>
+  <section class="band band--tight axis"><a class="ask" href={utm("https://vultun.com", "work-vultun")}>Go to vultun.com</a></section>
+</Site>
+<style>.solid-terra { background: var(--color-accentSecondary); } .guarantees { margin-top: var(--s4); }</style>

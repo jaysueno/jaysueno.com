@@ -1,0 +1,66 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Ledger from "../../components/Ledger.astro";
+import Fig from "../../components/Fig.astro";
+import Photo from "../../components/Photo.astro";
+import { software } from "../../data/numbers";
+// Ranked by Jay, November 7, 2026: marketing and email first, then customer intelligence.
+const lead = [
+  { name: "Our own marketing and email engine", text: "Flows, audiences, and send limits in our own database. It replaced Kit and Zapier. There's no AI in the sending path, and every send has to pass the gates." },
+  { name: "Customer intelligence", text: "A customer feature store, RFM segmentation, engagement scoring across every channel, and six behavioral personas, first explored with k-means clustering." },
+  { name: "The customer chatbot", text: "On WhatsApp, Instagram, and Messenger. It reads live class times and a knowledge base we wrote, and it hands off to a person when it should." },
+];
+const does = ["Payroll", "A general ledger", "End-of-day close", "Receipt capture", "Time clock", "Roles and permissions", "Booking and payment sync"];
+---
+<Site title="BizPortal: running a real company with AI agents" titleSuffix={false} description="BizPortal is the software that runs Vultun: marketing and email, customer intelligence, the chatbot, payroll, and the books. AI agents write nearly all of it." path="/work/bizportal/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The work" title="I don't type most of it anymore." lead="BizPortal is the software that runs Vultun. I design it, read it, and approve it. AI coding agents write nearly all of it. It went live on May 23, 2026." />
+  <section class="band band--tight axis cols cols--2">
+    <div class="flow measure">
+      <p class="kicker">How it happened</p>
+      <p>I learned to code at forty, in a boot camp, Googling my errors. I was a data analyst, not a software engineer. In January 2026, I started directing coding agents on the company's software. In July I wrote: as fast as I can, I'm learning AI vibe-coding with Claude Code.</p>
+      <p>Then, in the slow season, I cancelled the tools we were renting: Airtable, Zapier, Kit, Cursor, and CopyAI. We got <a href="/numbers/">₱7,854 a month</a> back, and the company owns what replaced them.</p>
+    </div>
+    <div class="flow">
+      <p class="kicker">What it does</p>
+      <ul class="does-lead flow" style="--flow: var(--s3)">{lead.map((d) => <li><h2 class="title">{d.name}</h2><p class="small">{d.text}</p></li>)}</ul>
+      <ul class="does small">{does.map((d) => <li>{d}</li>)}</ul>
+      <p class="small quiet">Internal only. Staff use it every day. You can't log in, and the real screens are full of real people. So here's one with made-up numbers.</p>
+    </div>
+  </section>
+  <section class="axis band--tight">
+    <figure class="fig fig--inset demo">
+      <Photo id="bizportal-demo" alt="A BizPortal insights screen filled with sample data: four summary cards, a bar chart of revenue by month and venue, a heatmap of bookings by day and hour, and a calendar heatmap of daily revenue. The screen says every number on it is made up." sizes="(min-width: 900px) 80vw, 100vw" widths={[800, 1200, 1600, 2200]} />
+      <figcaption class="caption num">A real BizPortal screen. The charts are ours. Every number on it is made up.</figcaption>
+    </figure>
+  </section>
+  <Fig id="coding-screen" ratio="16-9" alt="A laptop on a table with code on the screen. The right side shows a SQL file that builds the customer feature store. The left side is blurred." caption="Most of the work looks like this. July 14, 2026. The blurred part has real numbers in it." />
+  <section class="band band--tight axis flow"><h2 class="title">In numbers</h2><Ledger rows={software} /></section>
+  <section class="paper band"><div class="axis flow">
+    <p class="kicker">The rules I run agents by</p>
+    <h2 class="story">The AI talks. Functions decide.</h2>
+    <ol class="rules measure flow" style="--flow: var(--s3)">
+      <li><strong>AI interprets and phrases. Functions decide and fetch.</strong> An agent can draft a payroll answer. It can't be the thing that pays anyone.</li>
+      <li><strong>Nothing writes to the database without me seeing it first.</strong> Every write gets described, with the row count and how to reverse it, and then it waits for my go.</li>
+      <li><strong>Check the real thing, never the model's claim.</strong> Merged doesn't mean applied. A number you can't verify is "unknown," never a guess.</li>
+      <li><strong>Build the loop, not just the system.</strong> Every correction I make gets written down where the next run will read it. The loop is the asset, not the model.</li>
+      <li><strong>Autonomy is earned.</strong> Money, customers, and health data stay behind a gate that can say no.</li>
+    </ol>
+    <p><a class="ask" href="/code/">What I'm opening up</a></p>
+  </div></section>
+  <section class="band axis flow measure" aria-labelledby="yours-h">
+    <p class="kicker">Work with me</p>
+    <h2 id="yours-h" class="story">I can help you build this for your business.</h2>
+    <p class="lead">AI automations, and getting AI into the way your company actually runs. It's one of the biggest things I can help with.</p>
+    <p><a class="ask" href="/work-with-me/">Tell me where you're stuck</a></p>
+  </section>
+</Site>
+<style>
+  .does-lead > li > * + * { margin-top: 0.35rem; }
+  .does { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.15rem var(--s3); border-top: 1px solid var(--rule); padding-top: var(--s2); margin-top: var(--s3); }
+  .demo :global(img) { width: 100%; height: auto; display: block; }
+  .demo figcaption { margin-top: var(--s2); }
+  .does li { padding-block: 0.15rem; }
+  .rules { list-style: decimal; padding-left: 1.2em; }
+  .rules strong { font-weight: 600; }
+</style>

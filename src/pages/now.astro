@@ -1,0 +1,34 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import Fig from "../components/Fig.astro";
+import Subscribe from "../components/Subscribe.astro";
+import { identity } from "../data/identity";
+const mail = (s: string) => `mailto:${identity.email}?subject=${encodeURIComponent(s)}`;
+---
+<Site title="Now" description="What Jay Sueno is working on right now: IV therapy and a retreat at Vultun, the writing, the code, and the body. Updated November 7, 2026." path="/now/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="Now" title="What I'm in the middle of." updated="November 7, 2026" lead="A list of what's true this month. If it's stale, tell me." />
+  <section class="band band--tight axis cols cols--2">
+    <ul class="now flow" style="--flow: var(--s4)">
+      <li><h2 class="title">The business</h2><p>Physician-led IV therapy and aesthetics with visiting doctors, two months in. <a href="/work/vultun/#c2s-h">Core to Surf</a>, our Pilates and surf retreat, is February 26 to 28, 2027. Eight places.</p></li>
+      <li><h2 class="title">The writing</h2><p>The essay on seven years sober is on the way. The Seed went out on November 2.</p></li>
+      <li><h2 class="title">The code</h2><p>This site, and cleaning up my code so I can <a href="/code/">share it</a>.</p></li>
+      <li><h2 class="title">The body</h2><p>Pilates, strength work, stretching, recovery, and getting sent over the falls at Pesangan.</p></li>
+    </ul>
+    <Fig id="family-water" inset ratio="3-2" alt="Jay, Allegra, and their daughter close together in the sea, laughing at the camera, with a pink evening sky behind them." caption="Allegra, me, and our daughter." position="50% 40%" />
+  </section>
+  <section class="paper band"><div class="axis flow measure">
+    <p class="kicker">What I'm trying to figure out</p>
+    <ul class="flow title" style="--flow: var(--s3)">
+      <li>How do we raise a child in this new age, and keep our humanity?</li>
+      <li>Can I love well, do work that means something, and still be home?</li>
+      <li>Do all of these things fit together neatly?</li>
+    </ul>
+    <p>I think the answer to the path isn't there yet. That's life, and we need to exist there.</p>
+    <p class="kicker">One question for you</p>
+    <p class="story">What would you cut? And what would you widen?</p>
+    <p><a class="ask" href={mail("What I would cut")}>Tell me</a></p>
+    <p class="caption quiet">With your okay, I'll print a few answers here.</p>
+  </div></section>
+  <section class="band axis measure"><Subscribe source="now" /></section>
+</Site>

@@ -1,0 +1,78 @@
+---
+import { nav, footerNav, links, identity, EDITION, daysSober, LAST_DRINK } from "../data/identity";
+const { mdPath = "/index.md" } = Astro.props;
+const built = daysSober();
+---
+<footer class="site-foot">
+  <div class="axis site-foot__grid">
+    <div class="site-foot__line">
+      <p class="landing">{identity.line}</p>
+      <p class="caption num site-foot__live" data-agent="skip">
+        <span id="foot-time">General Luna, Siargao</span>. Day <span data-days-sober={LAST_DRINK}>{built.toLocaleString("en-US")}</span> without a drink.
+      </p>
+    </div>
+    <ul class="site-foot__col">{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}<li><a href="/open-to/">Say hello</a></li></ul>
+    <ul class="site-foot__col">{footerNav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    <ul class="site-foot__col">{links.map((l) => <li><a rel="me" href={l.url}>{l.label}</a></li>)}<li><a href={`mailto:${identity.email}`}>Email</a></li></ul>
+  </div>
+  <div class="axis site-foot__base caption">
+    <span>Edition {EDITION.number}, {EDITION.label}. Every photo is real. Every number has a date.</span>
+    {mdPath && <button type="button" class="agent-toggle" data-md={mdPath}>Read this page as an agent</button>}
+  </div>
+</footer>
+
+{mdPath && (
+<dialog id="agent-view" class="agent-view" aria-label="This page as an agent reads it">
+  <div class="agent-view__bar">
+    <span>This is what an agent reads. Same words, no paint. <a href={mdPath}>Raw file</a> · <a href="/agents/">How this works</a></span>
+    <button type="button" class="agent-view__close">Close</button>
+  </div>
+  <pre id="agent-view-text" tabindex="0">Loading</pre>
+</dialog>
+)}
+
+<script>
+  // Island clock.
+  const t = document.getElementById("foot-time");
+  if (t) {
+    const f = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Manila" });
+    t.textContent = `General Luna, Siargao, ${f.format(new Date())}`;
+  }
+  // Live day count, from the same date everywhere.
+  document.querySelectorAll<HTMLElement>("[data-days-sober]").forEach((el) => {
+    const start = Date.parse(`${el.dataset.daysSober}T00:00:00+08:00`);
+    el.textContent = Math.floor((Date.now() - start) / 86400000).toLocaleString("en-US");
+  });
+  // Agent view.
+  const dlg = document.getElementById("agent-view") as HTMLDialogElement | null;
+  const pre = document.getElementById("agent-view-text");
+  document.querySelector<HTMLButtonElement>(".agent-toggle")?.addEventListener("click", async (e) => {
+    if (!dlg || !pre) return;
+    dlg.showModal();
+    const md = (e.currentTarget as HTMLButtonElement).dataset.md!;
+    try {
+      const r = await fetch(md);
+      pre.textContent = r.ok ? await r.text() : "This page has no Markdown twin yet.";
+    } catch { pre.textContent = "Could not load the Markdown twin."; }
+  });
+  document.querySelector(".agent-view__close")?.addEventListener("click", () => dlg?.close());
+</script>
+
+<style>
+  .site-foot { background: var(--color-bgDeep); color: var(--color-primary); padding-block: var(--s6) var(--s4); }
+  .site-foot__grid { display: grid; grid-template-columns: minmax(16rem, 2fr) repeat(3, minmax(7rem, 1fr)); gap: var(--s5) var(--s4); }
+  .site-foot__live { margin-top: var(--s3); }
+  .site-foot__col { font-size: 0.9375rem; }
+  .site-foot__col li + li { margin-top: 0.3rem; }
+  .site-foot__col a { text-decoration: none; opacity: 0.86; }
+  .site-foot__col a:hover { opacity: 1; text-decoration: underline; color: var(--color-primary); }
+  .site-foot__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2) var(--s4); margin-top: var(--s6); padding-top: var(--s3); }
+  .agent-toggle { background: none; border: 0; padding: 0; font-size: inherit; color: var(--color-accent); text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+  .agent-view { width: min(60rem, calc(100vw - 2rem)); height: min(84vh, 60rem); max-width: none; max-height: none; padding: 0; border: 1px solid var(--rule); background: #050908; color: #d6e0d8; }
+  .agent-view::backdrop { background: rgb(0 0 0 / 0.72); }
+  .agent-view[open] { display: grid; grid-template-rows: auto 1fr; }
+  .agent-view__bar { display: flex; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; font-size: 0.8125rem; border-bottom: 1px solid var(--rule); }
+  .agent-view__close { background: none; border: 0; padding: 0; font-size: inherit; font-weight: 600; color: var(--color-accent); cursor: pointer; }
+  .agent-view pre { margin: 0; padding: 1rem; overflow: auto; font-family: var(--mono); font-size: 0.8125rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+  @media (max-width: 760px) { .site-foot__grid { grid-template-columns: 1fr 1fr; } .site-foot__line { grid-column: 1 / -1; } }
+</style>

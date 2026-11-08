@@ -1,0 +1,15 @@
+---
+import Site from "../layouts/Site.astro";
+import Photo from "../components/Photo.astro";
+---
+<Site title="You paddled past it" description="This page isn't here." path="/404/" overPhoto noIndex>
+  <section class="page">
+    <Photo id="paddle-overhead-3" alt="A lone surfer paddling on dark water, seen from above." class="page__photo" priority />
+    <div class="page__copy page__copy--bottom flow" style="--flow: var(--s3)">
+      <p class="kicker">404</p>
+      <h1 class="story">You paddled past it.</h1>
+      <p class="lead measure">That page isn't here. Happens to all of us.</p>
+      <p><a class="ask" href="/">Paddle back</a></p>
+    </div>
+  </section>
+</Site>

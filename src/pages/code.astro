@@ -1,0 +1,77 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import Ledger from "../components/Ledger.astro";
+import raw from "../data/commits-daily.json";
+
+// Counts only. Never repo names, commit text, or PR titles: those name real people.
+const days = (raw as { date: string; commits: number }[]).filter((d) => d.date >= "2026-01-01");
+const asOf = "November 7, 2026";
+const first = new Date(`${days[0].date}T12:00:00Z`);
+const lead = first.getUTCDay();
+const W = 12;
+const level = (c: number) => (c === 0 ? 0 : c < 8 ? 1 : c < 20 ? 2 : c < 40 ? 3 : 4);
+const paths: string[] = ["", "", "", "", ""];
+days.forEach((d, i) => {
+  const n = i + lead;
+  const x = Math.floor(n / 7) * W + W / 2;
+  const y = (n % 7) * W + W / 2;
+  paths[level(d.commits)] += `M${x} ${y}h0`;
+});
+const weeks = Math.ceil((days.length + lead) / 7);
+const rows = [
+  { value: "4,305", label: "Commits on main branches across sixteen repos.", note: `January 11 to ${asOf}. Squash merges mean the real number is higher.` },
+  { value: "3,168", label: "Merged pull requests, all in 2026.", note: asOf },
+  { value: "84%", label: "Of those commits carry a Claude co-author line. I read, I decide, I merge.", note: asOf },
+  { value: "216", label: "Active days out of 301. Longest streak, 39 days. Busiest day, 91 commits.", note: asOf },
+];
+const planned = [
+  { name: "claude-operator-kit", text: "The hooks, rules, and skills I run every session with. Each rule carries the date of the mistake that caused it." },
+  { name: "agent-cage", text: "How I keep a personal AI agent in a box: read-only filesystem, default-deny network, and the fire drills to prove it holds." },
+  { name: "llm-wiki-hooks", text: "A second brain in plain Markdown, filed and recalled by a local model. The machinery, never my notes." },
+  { name: "frozen-ruler", text: "The grader writes the tests first, and the builder can't edit them. How I stopped agents from marking their own homework." },
+  { name: "creator-ledger", text: "Track your own posts and audience across platforms with a few scripts and three CSV files. No Hootsuite." },
+];
+const stack = [
+  ["Claude Code", "Where nearly all of it gets written."],
+  ["A Mac Mini with a local Qwen model", "Free inference for the repetitive work."],
+  ["Supabase, Resend, DigitalOcean", "The database, the email, and the server. About ₱6,193 a month."],
+  ["Astro and Next.js", "This site, and the software that runs the company."],
+];
+---
+<Site title="Code" description="Jay Sueno learned to code at forty and now runs a ten-unit company on software written with AI agents: 4,305 commits and 3,168 merged pull requests in 2026." path="/code/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="Code" title="I learned to code at forty. Now it runs the company." lead="I'm not a software engineer. I'm an operator with a data science certificate and a lot of agents. Almost all of what I've built is private, because it's full of real people. I'm starting to pull out the parts I can share." updated={asOf} />
+  <section class="band band--tight axis flow" aria-labelledby="swell-h">
+    <h2 id="swell-h" class="title">The paddle, in commits. 2026.</h2>
+    <svg class="swell" viewBox={`0 0 ${weeks * W} ${7 * W}`} role="img" aria-label={`One mark per day of 2026 so far. Empty until January 11, then {4,305} commits across 216 active days.`.replace("{4,305}", "4,305")}>
+      {paths.map((d, i) => <path class={`swell__l${i}`} d={d} />)}
+    </svg>
+    <p class="caption quiet num">Each mark is a day. January on the left, today on the right. Before January 11, 2026, nothing.</p>
+    <Ledger rows={rows} />
+  </section>
+  <section class="paper band" aria-labelledby="open-h"><div class="axis flow">
+    <p class="kicker">Going public</p>
+    <h2 id="open-h" class="story">What I'm cleaning up to share.</h2>
+    <p class="lead measure">Real operator software that runs a real business, one small piece at a time. I'm working to put these online soon so that you can use them, free.</p>
+    <ol class="planned">{planned.map((p) => <li><h3 class="mono">{p.name}</h3><p class="small">{p.text}</p></li>)}</ol>
+    <p><a class="ask" href="https://github.com/jaysueno" rel="me">Follow me on GitHub</a></p>
+    <p class="caption quiet measure">What's public there today is mostly 2020 boot camp homework, including a stock market predictor built on Donald Trump's tweets. It worked, sort of. Everyone starts somewhere.</p>
+  </div></section>
+  <section class="band band--tight axis flow" aria-labelledby="stack-h">
+    <h2 id="stack-h" class="title">What I use</h2>
+    <dl class="ledger">{stack.map(([a, b]) => <div class="ledger__row"><dt class="small"><strong>{a}</strong></dt><dd class="small quiet">{b}</dd></div>)}</dl>
+    <p><a class="ask" href="/work/bizportal/">The rules I run agents by</a></p>
+  </section>
+</Site>
+<style>
+  .swell { width: 100%; height: auto; stroke-linecap: square; stroke-width: 9; margin-top: var(--s3); }
+  .swell__l0 { stroke: rgb(216 211 202 / 0.09); }
+  .swell__l1 { stroke: rgb(242 237 226 / 0.28); }
+  .swell__l2 { stroke: rgb(242 237 226 / 0.55); }
+  .swell__l3 { stroke: #F2EDE2; }
+  .swell__l4 { stroke: var(--color-accent); }
+  .planned { border-top: 1px solid var(--rule); }
+  .planned li { display: grid; grid-template-columns: minmax(12rem, 18rem) 1fr; gap: 0.25rem var(--s4); padding-block: var(--s2); border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .mono { font-family: var(--mono); font-size: 0.9375rem; font-weight: 500; }
+  @media (max-width: 640px) { .planned li { grid-template-columns: 1fr; } }
+</style>

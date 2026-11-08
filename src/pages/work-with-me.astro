@@ -1,0 +1,124 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import Ledger from "../components/Ledger.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { audit, above, stackTotal, saving, savingPct, usd, OFFER_UPDATED } from "../data/offer";
+import { PERSON_ID, identity } from "../data/identity";
+// Proof rows: every figure is on /numbers/ or a work page, with its date.
+const proof = [
+  { value: "191,412", label: "Lines of TypeScript in BizPortal, the software that runs Vultun. I design it and read it. AI agents write nearly all of it.", note: "Counted November 3, 2026", href: "/work/bizportal/" },
+  { value: "62", label: "Scheduled jobs running without me.", note: "Counted November 3, 2026", href: "/numbers/" },
+  { value: "5", label: "Rented tools cancelled: Airtable, Zapier, Kit, Cursor, and CopyAI. The company owns what replaced them.", note: "On the numbers page", href: "/numbers/" },
+  { value: "17", label: "Days to move vultun.com off WordPress. Google's speed test now gives it 98 on desktop.", note: "March 2026. Score of November 7, 2026", href: "/work/websites/" },
+  { value: "88", label: "Customer questions our chatbot is tested against. 76 passed on the last full run, and none tripped a safety gate.", note: "Run of November 2, 2026", href: "/numbers/" },
+];
+const seller = { "@type": "Organization", name: "Vultun, Inc." };
+const offerNode = (name: string, description: string, price: number, monthly = false) => ({
+  "@type": "Offer",
+  name,
+  description,
+  url: "https://jaysueno.com/work-with-me/",
+  seller,
+  itemOffered: { "@type": "Service", name, provider: { "@id": PERSON_ID }, areaServed: "Worldwide" },
+  priceSpecification: monthly
+    ? { "@type": "UnitPriceSpecification", price, priceCurrency: "USD", unitText: "month" }
+    : { "@type": "PriceSpecification", price, priceCurrency: "USD" },
+});
+const nodes = [
+  offerNode(audit.name, `A ninety-minute working session and a written plan for the first five automations in an owner-run business. ${usd(audit.price)} for the first five businesses, then ${usd(audit.priceLater)}.`, audit.price),
+  ...above.map((a) => offerNode(a.name, a.text, a.price, a.unit !== "")),
+];
+---
+<Site title="Work with me: the AI Operations Audit" description={`Jay Sueno runs his company on software AI agents wrote. In ninety minutes and one written plan, he finds the first five jobs in your business to hand to AI. ${usd(audit.price)} for the first five businesses.`} path="/work-with-me/" created={OFFER_UPDATED.iso} updated={OFFER_UPDATED.iso} nodes={nodes}>
+  <PageHead kicker="Work with me" title="I can build this for your business." lead="My company runs on software AI agents wrote for me: the books, payroll, our email, the customer chatbot. Give me ninety minutes on how your business runs, and I'll write you the plan: the first five jobs to hand to AI, ranked by the hours and dollars they give back." updated={OFFER_UPDATED.label}>
+    <p><a class="ask" href="#start">Tell me where you're stuck</a></p>
+  </PageHead>
+
+  <section class="band band--tight axis flow" aria-labelledby="proof-h">
+    <p class="kicker">Why me</p>
+    <h2 id="proof-h" class="title">I did it in my own company first.</h2>
+    <Ledger rows={proof} />
+  </section>
+
+  <section class="paper band" aria-labelledby="offer-h"><div class="axis flow">
+    <p class="kicker">The offer</p>
+    <h2 id="offer-h" class="story">{audit.name}</h2>
+    <p class="lead measure">For any owner-run business. My proof is strongest in wellness and hospitality, because that's where I built it.</p>
+    <dl class="stack">
+      {audit.stack.map((row) => (
+        <div class="stack__row"><dt class="small">{row.what}</dt><dd class="stack__value num">{usd(row.value)}</dd></div>
+      ))}
+      <div class="stack__row stack__row--total"><dt>Total value</dt><dd class="stack__value num">{usd(stackTotal)}</dd></div>
+    </dl>
+    <div class="price flow" style="--flow: var(--s2)">
+      <p class="price__figure num">{usd(audit.price)}</p>
+      <p class="lead">for the first five businesses. You save {usd(saving)}, or {savingPct}%. After that, the price is {usd(audit.priceLater)}.</p>
+    </div>
+    <div class="cols cols--2 terms">
+      <div class="flow" style="--flow: var(--s2)">
+        <h3 class="title">The guarantee</h3>
+        <p>If the plan doesn't find at least five hours a week your team can hand to AI, you pay nothing. If you hire me to build within thirty days, the full {usd(audit.price)} comes off the build.</p>
+      </div>
+      <div class="flow" style="--flow: var(--s2)">
+        <h3 class="title">The limit</h3>
+        <p>Four audits a month. I run Vultun, and that's the time I have.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="band band--tight axis flow" aria-labelledby="how-h">
+    <p class="kicker">How it works</p>
+    <h2 id="how-h" class="title">Four steps, about a week.</h2>
+    <ol class="steps measure">
+      <li>Tell me where you're stuck, using the form at the bottom of this page. I read every one.</li>
+      <li>We talk for ninety minutes on a video call. I'm in the Philippines, so for the US that's usually your late afternoon or evening and my early morning.</li>
+      <li>After the call, Vultun, Inc. sends the invoice in US dollars. Pay by bank transfer, Wise, PayPal, or Xendit.</li>
+      <li>Within seven days, the plan and the recorded walkthrough land in your inbox.</li>
+    </ol>
+    <p class="measure">I set your AI up the way I run mine. The AI talks, and functions decide. Nothing touches money or customers until a person says yes.</p>
+    <p><a class="ask" href="/work/bizportal/">The rules I run my agents by</a></p>
+  </section>
+
+  <section class="band band--tight axis flow" aria-labelledby="more-h">
+    <p class="kicker">When you want more</p>
+    <h2 id="more-h" class="title">After the plan, I can build it with you.</h2>
+    <ul class="more">
+      {above.map((a) => (
+        <li class="flow" style="--flow: var(--s2)">
+          <h3 class="title">{a.name}</h3>
+          <p class="more__price num">{usd(a.price)}{a.unit}</p>
+          <p class="small">{a.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="start" class="paper band" aria-labelledby="start-h"><div class="axis cols cols--2">
+    <div class="flow">
+      <p class="kicker">Start here</p>
+      <h2 id="start-h" class="story">Tell me where you're stuck.</h2>
+      <p class="lead">Four audits a month, and {usd(audit.price)} only for the first five businesses.</p>
+    </div>
+    <div class="flow">
+      <LeadForm topic="AI Operations Audit" />
+      <p class="small">Or write to me: <a href={`mailto:${identity.email}`}>{identity.email}</a></p>
+    </div>
+  </div></section>
+</Site>
+<style>
+  .stack { border-top: 1px solid var(--rule); max-width: 52rem; }
+  .stack__row { display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s5); padding-block: var(--s3); border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .stack__value { font-family: var(--display); font-size: var(--t-title); line-height: 1.05; color: var(--head); font-variant-numeric: lining-nums tabular-nums; text-align: right; }
+  .stack__row--total dt { font-weight: 600; }
+  .stack__row--total { border-bottom-width: 2px; border-bottom-color: var(--head); }
+  .price { padding-top: var(--s3); max-width: 52rem; }
+  .price__figure { font-family: var(--display); font-size: var(--t-cover); line-height: 0.96; color: var(--head); font-variant-numeric: lining-nums; }
+  .terms { padding-top: var(--s4); border-top: 1px solid var(--rule); max-width: 52rem; }
+  .steps { counter-reset: step; border-top: 1px solid var(--rule); }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 2.4rem 1fr; gap: var(--s3); padding-block: var(--s3); border-bottom: 1px solid var(--rule); }
+  .steps li::before { content: counter(step); font-family: var(--display); font-size: var(--t-title); line-height: 1.1; color: var(--color-primary); }
+  .more { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--s5); border-top: 1px solid var(--rule); padding-top: var(--s4); }
+  .more__price { font-family: var(--display); font-size: var(--t-title); line-height: 1.05; color: var(--color-primary); }
+  @media (max-width: 560px) { .stack__row { grid-template-columns: 1fr; gap: 0.2rem; } .stack__value { text-align: left; } }
+</style>

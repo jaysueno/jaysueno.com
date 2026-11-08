@@ -1,0 +1,87 @@
+---
+import Site from "../layouts/Site.astro";
+import Fig from "../components/Fig.astro";
+import Subscribe from "../components/Subscribe.astro";
+import { identity } from "../data/identity";
+---
+<Site title="Who is Jay Sueno?" description="Who is Jay Sueno? Founder of Vultun on Siargao, surfer, father, seven years sober, back to school at 40, and the writer of The Long Paddle." path="/about/" pageType="ProfilePage" created="2026-11-07" updated="2026-11-07">
+  <header class="axis head cols cols--text-photo">
+    <div class="flow" style="--flow: var(--s3)">
+      <p class="kicker">Story</p>
+      <h1 class="story">Who is Jay Sueno?</h1>
+      <p class="lead">{identity.shortBio}</p>
+      <p>He was raised in the Pacific Northwest and spent much of his adult life in California. He studied at the University of Washington, went back to school at forty for a data science certificate from UC San Diego, worked as a data analyst at Amazon, and moved to Siargao in the summer of 2022. He runs his company on software he directs AI agents to write. The rest of this page is in his own words.</p>
+    </div>
+    <Fig id="portrait-bw" inset ratio="4-5" alt="Black and white portrait of Jay Sueno at a table in a dark T-shirt, hands clasped, looking past the camera." position="50% 36%" widths={[480, 800]} />
+  </header>
+
+  <section class="axis chapter" aria-labelledby="c1"><div class="cols cols--text-photo">
+    <div class="flow measure">
+      <p class="kicker">September 13, 2019</p>
+      <h2 id="c1" class="title">A bench.</h2>
+      <p>It was a September Friday the 13th, 2019 and a Harvest Moon. I was sitting on a bench overlooking the full moon at my favorite surf break. I was broke, depressed, alcoholic, smoked a pack a day, overweight, had no job, had no girlfriend, and my blood markers weren't looking good. I hadn't surfed in months and I lived in a beautiful surf town. I felt like I was wasting a golden opportunity in life.</p>
+      <p>After 25 years of drinking, I was at 8 to 12 drinks a day. I didn't know how I had gotten there.</p>
+      <p class="landing">So I quit. It changed my life forever.</p>
+      <p>I slept better. I realized that I wasn't old and tired. I was just a little hungover every day.</p>
+    </div>
+    <Fig id="at-the-bar" inset ratio="4-5" alt="Jay in sunglasses at a roadside table, holding a large salted drink." caption="August 17, 2016. Three years before the bench." />
+  </div></section>
+
+  <section class="axis chapter" aria-labelledby="c2"><div class="flow measure">
+    <p class="kicker">Ten days of silence</p>
+    <h2 id="c2" class="title">"What am I capable of?"</h2>
+    <p>Being that I was newly sober and still having a hard time with all of the layers and years of unprocessed traumas, fears, and insecurities, I decided to try something crazy. Ten days of silent meditation.</p>
+    <p>I faced deep-rooted fears. I'm middle-aged, with white hair and whiskers. Now what? What about death? Do I love myself or have I just been medicating myself? What's my purpose in this life? What am I capable of?</p>
+    <p class="landing">Quitting alcohol and finding meditation was my ember and fan.</p>
+  </div></section>
+
+  <Fig id="surf-pocket" ratio="16-9" alt="Jay in an orange shirt crouched low in the pocket of a steep green wave, with white water behind him and a low island on the horizon." caption="Bomi, Siargao. November 16, 2024. Photo by Tom Soupart." position="50% 58%" />
+
+  <section class="axis chapter" aria-labelledby="c3"><div class="flow measure">
+    <p class="kicker">2020</p>
+    <h2 id="c3" class="title">Showing up, and a stubborn old dog.</h2>
+    <p>I decided to surf for 150 days that year. That year, I surfed almost 200 sessions. There's something to be said about showing up and doing the thing.</p>
+    <p>My friend Chris Romero mentioned that he enrolled in a data science and AI course. I thought this would be my chance to prove to myself that I wasn't an old dog. A week later, I was enrolled at UC San Diego. I had 10 hours of class a week and 4 hours a day of homework. I became a master at Googling ways to solve coding errors.</p>
+    <p>I learned about a small company called OpenAI. I even applied to one of their job postings, but I didn't get it. They would later release ChatGPT and change history.</p>
+    <p>Eventually, I landed a job at Amazon as a data analyst.</p>
+  </div></section>
+
+  <section class="axis chapter" aria-labelledby="c4"><div class="flow measure">
+    <p class="kicker">Encinitas, 2021</p>
+    <h2 id="c4" class="title">"Productize yourself."</h2>
+    <p>During one lunch at the cowork, I struck up a conversation with Steph Smith. I asked how anyone starts a business and creates content. She said, "Be yourself. Find out what you love and do content on that." She said, "No one else is like you. Why try to copy someone else's playbook when you have one yourself?"</p>
+    <p>I was like, "So you mean, create a business about a surfer dude who's into data science, meditation, breathwork, yoga, relationships, and working out?"</p>
+    <p>"Yes," Steph said with a smile.</p>
+    <p class="quiet small">This website is what happens when it takes you five years to take the advice.</p>
+  </div></section>
+
+  <section class="axis chapter" aria-labelledby="c5"><div class="cols cols--text-photo">
+    <div class="flow measure">
+      <p class="kicker">Siargao</p>
+      <h2 id="c5" class="title">You don't choose the island.</h2>
+      <p>I've been going to Siargao since 2009. Back then, it was a dirt runway landing with no paved roads. There were no businesses at Jacking Horse, where Vultun is located now. I wasn't always welcome here, and the island sent me away.</p>
+      <p>I came back in the summer of 2022. This time, I was ready physically, mentally, and spiritually.</p>
+      <p class="landing">Siargao is a blank canvas for people like me. It's a place where an idea can manifest into reality. Where dreamers go to build.</p>
+      <p>The seed is spiritual. The container is science.</p>
+    </div>
+    <Fig id="garden-carry" inset ratio="4-5" alt="Jay sitting cross-legged in a garden in a blue T-shirt, with his daughter climbing on his back." caption="Siargao, with my daughter." position="50% 40%" />
+  </div></section>
+
+  <section class="axis chapter" aria-labelledby="c6"><div class="flow measure">
+    <p class="kicker">Now</p>
+    <h2 id="c6" class="title">I still want a big life.</h2>
+    <p>I just mean something different by big now.</p>
+    <p class="lines"><span>More love means more to lose.</span><span>More freedom means more responsibility.</span><span>A bigger business means people counting on us to make payroll.</span><span>A daughter means an 18-hour day on my laptop costs me something I can't earn back later.</span></p>
+    <p class="landing">I'm not interested in choosing between ambition and presence.</p>
+    <p>I don't know if all of those things fit together neatly. That's the point. The Long Paddle is me working it out in public.</p>
+  </div></section>
+
+  <section class="axis chapter" aria-labelledby="c7"><div class="flow measure">
+    <p class="kicker">Why I'm telling you this</p>
+    <h2 id="c7" class="title">If you're lost, or you believe your life is over, there's a way out.</h2>
+    <p>If you're stuck in a job or a life you don't like in the city, and you want to take the step, I got you. I want to live so that on my deathbed I can look back and know I didn't leave anything on the table.</p>
+    <p>I'd rather have a stand on something than sit on the fence and be lukewarm.</p>
+    <p><a class="ask" href="/open-to/">Say hello</a></p>
+    <Subscribe source="about" />
+  </div></section>
+</Site>

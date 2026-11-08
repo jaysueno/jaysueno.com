@@ -1,0 +1,17 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Fig from "../../components/Fig.astro";
+import { utm } from "../../data/work-pages";
+---
+<Site title="Siargao Water" description="Siargao Water offers independent pre-drill groundwater surveys in Siargao using US-developed seismoelectric technology. Co-founded by Jay Sueno and Cito de Leon." path="/work/siargao-water/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The work" title="Siargao Water" lead="Independent pre-drill groundwater surveys using US-developed seismoelectric technology. Depth and saltwater risk, before you drill, so you drill once." />
+  <Fig id="work-water" ratio="16-9" alt="The Siargao coastline from the air, with reef and palm trees." caption="Siargao's coast." />
+  <section class="band axis flow measure">
+    <p class="kicker">With Cito de Leon</p>
+    <h2 class="story">We are two surfers driven by a deep connection to the island we call home.</h2>
+    <p>Know before you drill.</p>
+    <p class="small quiet">It's early. The site went live in July 2026.</p>
+    <p><a class="ask" href={utm("https://siargaowater.com", "work-water")}>Go to siargaowater.com</a></p>
+  </section>
+</Site>

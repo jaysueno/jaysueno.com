@@ -1,0 +1,62 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import Ledger from "../components/Ledger.astro";
+import { business, software, websiteCode, writing, stoppedRenting as s } from "../data/numbers";
+import { daysSober, LAST_DRINK } from "../data/identity";
+import { nowWeek } from "../data/timeline";
+const peso = (n: number) => `₱${n.toLocaleString("en-US")}`;
+const cut = s.cancelled.reduce((a, r) => a + (r[2] as number), 0);
+const kept = s.replaced.reduce((a, r) => a + (r[2] as number), 0);
+if (cut !== 14047 || kept !== 6193) throw new Error("Stopped-renting table does not add up.");
+const paddle = [
+  { value: daysSober().toLocaleString("en-US"), label: "Days without a drink. This number moves.", note: "Since September 13, 2019", live: true },
+  { value: "14", label: "Years surfing. I started at 33.", note: "October 2026" },
+  { value: "~200", label: "Surf sessions in 2020, against a goal of 150 days. The only way to get better is to do it. For surfing, it's water time.", note: "Vultun creation story", href: "https://vultun.com/journal/editorial/vultun-creation-story-a-siargao-wellness-journey/" },
+  { value: nowWeek().toLocaleString("en-US"), label: "Weeks lived, of the 5,200 it takes to surf until 100.", note: "Worked out when this page was built", href: "/#weeks-h" },
+];
+---
+<Site title="The numbers" description="Jay Sueno's numbers, dated and sourced: days sober, people served at Vultun, reviews, lines of software, and what a small company stopped paying for." path="/numbers/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The ledger" title="Numbers carry a date, or they don't go up." lead="What I can count about the business, the software, the writing, and the paddle. When a number gets stale, it's stale in public." updated="November 7, 2026" />
+
+  <section class="band band--tight axis flow" aria-labelledby="n1">
+    <h2 id="n1" class="title">The paddle</h2>
+    <dl class="ledger">
+      {paddle.map((r) => (
+        <div class="ledger__row">
+          <dt class="ledger__value">{r.live ? <span data-days-sober={LAST_DRINK}>{r.value}</span> : r.value}</dt>
+          <dd><span class="small">{r.label}</span><span class="caption quiet num ledger-note">{r.href ? <a href={r.href}>{r.note}</a> : r.note}</span></dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+  <section class="band band--tight axis flow" aria-labelledby="n2"><h2 id="n2" class="title">The business</h2><Ledger rows={business} /></section>
+
+  <section class="paper band" aria-labelledby="n3">
+    <div class="axis flow">
+      <p class="kicker">Slow season, sharpened</p>
+      <h2 id="n3" class="story">What we stopped renting.</h2>
+      <p class="lead measure">The software stack we cut, and the one we built to replace it.</p>
+      <div class="cols cols--2">
+        <table class="table">
+          <thead><tr><th scope="col">Cancelled</th><th scope="col">Per month</th></tr></thead>
+          <tbody>{s.cancelled.map(([a, b, c]) => <tr><td>{a} <span class="caption quiet">{b}</span></td><td>{peso(c as number)}</td></tr>)}</tbody>
+          <tfoot><tr><td>Per month</td><td>{peso(cut)}</td></tr></tfoot>
+        </table>
+        <table class="table">
+          <thead><tr><th scope="col">What replaced it</th><th scope="col">Per month</th></tr></thead>
+          <tbody>{s.replaced.map(([a, b, c]) => <tr><td>{a} <span class="caption quiet">{b}</span></td><td>{c === 0 ? "free" : peso(c as number)}</td></tr>)}</tbody>
+          <tfoot><tr><td>Per month</td><td>{peso(kept)}</td></tr></tfoot>
+        </table>
+      </div>
+      <p class="story num">{peso(cut - kept)} back every month.</p>
+      <p class="lead">About ₱94,000 a year. A 56% cut.</p>
+      <p class="caption quiet measure">{s.note} First published in <a href="/writing/the-spear-and-the-net/">The Spear and the Net</a>, July 24, 2026.</p>
+      <p class="small measure">Not in the table: our customer chatbot, which I also built. Its AI runs on the subscription we already pay for, and the only extra is a WhatsApp line of about $50 a month. It didn't replace anything we were renting, so it doesn't count either way.</p>
+    </div>
+  </section>
+
+  <section class="band band--tight axis flow" aria-labelledby="n4"><h2 id="n4" class="title">The software</h2><Ledger rows={[software[0], websiteCode, ...software.slice(1)]} /><p><a class="ask" href="/code/">The code, in numbers</a></p><p><a class="ask" href="/work/websites/">How we got off WordPress and Elementor</a></p></section>
+  <section class="band band--tight axis flow" aria-labelledby="n5"><h2 id="n5" class="title">The writing</h2><Ledger rows={writing} /></section>
+</Site>
+<style>.ledger-note { display: block; margin-top: 0.15rem; }</style>

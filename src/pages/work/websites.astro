@@ -1,0 +1,95 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Ledger from "../../components/Ledger.astro";
+import Photo from "../../components/Photo.astro";
+import { utm } from "../../data/work-pages";
+// Speed numbers: Lighthouse 12.8.2 runs against live vultun.com on November 7, 2026.
+// No speed score for the old site exists anywhere, so none is printed. Do not add a "typical" one.
+const rows = [
+  { value: "17", label: "Days from the first commit on vultun.com to live on Astro. February 27 to March 16, 2026.", note: "Git history" },
+  { value: "28", label: "Pages and journal posts moved across one for one, with about 50 redirects so the old links still work.", note: "March 2026" },
+  { value: "5", label: "Public sites now: vultun.com, jaysueno.com, siargaoretreats.com, siargaowellness.com, siargaowater.com.", note: "All answering November 7, 2026" },
+  { value: "~57,500", label: "Lines of website code across them, in one codebase.", note: "Counted November 7, 2026" },
+];
+const scores = [
+  { value: "98", label: "Lighthouse performance on desktop for vultun.com. Main content on screen in 1.1 seconds.", note: "One run, November 7, 2026" },
+  { value: "89", label: "Lighthouse performance on mobile, the median of three runs: 62, 89, and 91.", note: "November 7, 2026" },
+  { value: "100", label: "Lighthouse SEO score for vultun.com, on desktop and on mobile.", note: "November 7, 2026" },
+  { value: "79 to 96", label: "Lighthouse performance on mobile for the three smaller sites: siargaoretreats.com 79, siargaowellness.com 86, siargaowater.com 96. All three score 100 for SEO.", note: "One run each, November 7, 2026" },
+  { value: "53 of 56", label: "Pages in the vultun.com sitemap indexed by Google.", note: "Scorecard of November 6, 2026" },
+];
+const before = [
+  ["Making a change", "Drag and drop in Elementor, by hand, page by page. No API, so no agent could touch it.", "I ask an agent. It edits a plain file, I read the change, and one command publishes it."],
+  ["What serves a page", "WordPress and PHP, an Astra theme, the Elementor page builder, and a chain of plugins.", "A finished file. No PHP, no theme, no page builder, no plugins."],
+  ["Hosting", "SiteGround, ₱22,677 a year. Prepaid through March 20, 2027, with renewal switched off.", "The server we already run, behind Cloudflare. Nothing extra for the sites."],
+  ["How many sites", "One, standing alone.", "Five, in one codebase. The brand sites share design tokens, components, and search code."],
+  ["Search and AI", "Yoast, about two schema blocks a page, and no llms.txt.", "Structured data throughout, with 233 blocks parsing without an error, and an llms.txt on vultun.com, jaysueno.com, and siargaowater.com."],
+];
+const benefits = [
+  ["Money", "No more web host bill once SiteGround lapses in March 2027, and no paid page builder or booking plugin to renew. We looked at a paid CMS at $49 and then $99 a month and said no."],
+  ["Time", "Every change used to be manual work in Elementor. Now it's a sentence to an agent. The whole of vultun.com moved in 17 days."],
+  ["Speed", "A static file has nothing to build when you ask for it. vultun.com answered in about 110 to 150 milliseconds in my November 7 test runs."],
+  ["Bloat", "No WordPress, no theme, no page builder, no plugin chain to keep patched. There's no admin screen at all. The agents are the CMS."],
+  ["One system", "Fix something in the shared parts and it lands on every brand site that uses them. Each brand keeps its own fonts and colors."],
+  ["Search and agents", "Ahrefs scored vultun.com at 93% for site health and 100% for AI discoverability (a beta score) on November 2, 2026. Pages are written for people, and for the agents reading on their behalf."],
+  ["We own it", "The content is plain files in git. Every edit has a history, every edit can be undone, and nobody can raise our rent."],
+  ["Security", "No PHP, no admin login, no plugins. That's a lot less for anyone to break into."],
+];
+---
+<Site title="The website network: from WordPress and Elementor to Astro" titleSuffix={false} description="How Jay Sueno moved vultun.com off WordPress and Elementor to Astro in 17 days, then built a network of five public sites in one codebase, edited by AI agents." path="/work/websites/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The work" title="From one slow WordPress site to five fast ones." lead="vultun.com used to run on WordPress and Elementor. It was slow, bloated, and expensive, and no AI could work on it. In early 2026, we moved it to Astro in 17 days and built the rest of the network on the same parts." />
+  <figure class="fig net">
+    <div class="net__scroll" tabindex="0" role="group" aria-label="Five home pages, side by side. Scrolls sideways on a phone.">
+      <Photo id="network-sites" alt="The home pages of five sites side by side: vultun.com, jaysueno.com, siargaoretreats.com, siargaowellness.com, and siargaowater.com." sizes="(min-width: 900px) 100vw, 900px" widths={[900, 1200, 1600, 2200]} />
+    </div>
+    <figcaption class="caption num">Five sites, one codebase. Each keeps its own brand.</figcaption>
+  </figure>
+  <section class="band band--tight axis flow"><h2 class="title">In numbers</h2><Ledger rows={rows} /></section>
+  <section class="paper band" aria-labelledby="ba-h">
+    <div class="axis flow">
+      <p class="kicker">Before and after</p>
+      <h2 id="ba-h" class="story">What changed.</h2>
+      <div class="ba-wrap">
+        <table class="table ba">
+          <thead><tr><th scope="col"><span class="sr">Topic</span></th><th scope="col">WordPress and Elementor</th><th scope="col">Astro</th></tr></thead>
+          <tbody>{before.map(([a, b, c]) => <tr><th scope="row">{a}</th><td>{b}</td><td>{c}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="band band--tight axis flow" aria-labelledby="ben-h">
+    <p class="kicker">What we got</p>
+    <h2 id="ben-h" class="story">Every benefit I can name.</h2>
+    <dl class="benefits">{benefits.map(([a, b]) => <div><dt class="title">{a}</dt><dd class="small">{b}</dd></div>)}</dl>
+  </section>
+  <section class="band band--tight axis flow measure" aria-labelledby="cost-h">
+    <p class="kicker">What it cost</p>
+    <h2 id="cost-h" class="story">Day one, we lost most of the traffic.</h2>
+    <p>On cutover day, only 16 of the 50 planned redirects were live, so old links to old pages went nowhere. Google Analytics showed 58 sessions that day, against about 150 on a normal one, and organic traffic fell about 60%. We shipped the rest of the redirects on March 18, two days later.</p>
+  </section>
+  <section class="band band--tight axis flow">
+    <h2 class="title">The speed, measured</h2>
+    <Ledger rows={scores} />
+    <p class="caption quiet measure">Run from my own Mac on my own connection, so treat them as a snapshot. I don't have a saved score for the old site, and it's gone now, so there's no before number here, only the after.</p>
+  </section>
+  <section class="band axis flow measure" aria-labelledby="yours-h">
+    <p class="kicker">Work with me</p>
+    <h2 id="yours-h" class="story">Still paying for a slow site you can't change?</h2>
+    <p class="lead">I help people build AI automations and get AI into how their business runs. This is one of the ways it pays off.</p>
+    <p><a class="ask" href="/work-with-me/">Tell me where you're stuck</a></p>
+    <p class="small"><a href={utm("https://vultun.com", "work-websites")}>See vultun.com</a></p>
+  </section>
+</Site>
+<style>
+  .net__scroll { overflow-x: auto; scrollbar-width: thin; }
+  .net__scroll :global(img) { display: block; width: 100%; min-width: 56rem; height: auto; }
+  .ba-wrap { overflow-x: auto; }
+  .ba { min-width: 40rem; }
+  .ba th[scope="row"] { font-weight: 600; text-align: left; vertical-align: top; }
+  .ba td { vertical-align: top; text-align: left; }
+  .ba thead th { text-align: left; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .benefits { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: var(--s4) var(--s5); border-top: 1px solid var(--rule); padding-top: var(--s4); }
+  .benefits dd { margin-top: 0.35rem; }
+</style>

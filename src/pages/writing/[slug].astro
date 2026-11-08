@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from "astro:content";
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { essayCovers } from "../../data/essay-covers";
+import Site from "../../layouts/Site.astro";
+import Subscribe from "../../components/Subscribe.astro";
+import { fullDate } from "../../data/writing";
+import { PERSON_ID, SITE } from "../../data/identity";
+
+export async function getStaticPaths() {
+  const essays = await getCollection("essays");
+  return essays.map((e) => ({ params: { slug: e.id }, props: { essay: e } }));
+}
+const { essay } = Astro.props;
+const { Content } = await render(essay);
+const { title, dek, description, date, substack } = essay.data;
+const path = `/writing/${essay.id}/`;
+const iso = date.toISOString().slice(0, 10);
+// Each essay shares with its own cover, cropped to the 1200 by 630 that social cards and search expect.
+const photos = import.meta.glob<{ default: ImageMetadata }>("/src/assets/photos/essay-*.jpg", { eager: true });
+const cover = essayCovers[essay.id];
+const coverFile = cover ? photos[`/src/assets/photos/${cover.id}.jpg`].default : undefined;
+// A cover too small to fill the card keeps the site's default share image rather than a blurry stretch.
+const shareImage = coverFile && coverFile.width >= 1200 ? (await getImage({ src: coverFile, width: 1200, height: 630, fit: "cover", position: "attention", format: "jpg", quality: 80 })).src : undefined;
+const all = (await getCollection("essays")).filter((e) => e.id !== essay.id).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const node = {
+  "@type": "BlogPosting",
+  "@id": `${SITE}${path}#article`,
+  headline: title,
+  description: description ?? dek,
+  image: new URL(shareImage ?? "/og-image.jpg", SITE).href,
+  datePublished: iso,
+  dateModified: iso,
+  author: { "@id": PERSON_ID },
+  publisher: { "@id": PERSON_ID },
+  mainEntityOfPage: `${SITE}${path}`,
+  isPartOf: { "@type": "Blog", name: "The Long Paddle", url: "https://jaysueno.substack.com" },
+  sameAs: substack,
+};
+---
+<Site title={title} description={description ?? dek ?? title} path={path} ogType="article" ogImage={shareImage} ogImageAlt={shareImage ? cover?.alt : undefined} nodes={[node]} created={iso} updated={iso}>
+  <article class="paper essay">
+    <header class="axis head flow" style="--flow: var(--s3)">
+      <p class="kicker"><a href="/writing/">The Long Paddle</a></p>
+      <h1 class="story">{title}</h1>
+      {dek && <p class="lead measure">{dek}</p>}
+      <p class="caption quiet num">Jay Sueno. {fullDate(date)}. First published on <a href={substack}>Substack</a>.</p>
+    </header>
+    <div class="axis prose band--tight"><Content /></div>
+    <div class="axis band band--tight flow measure no-print">
+      <p class="landing">If you're still ambitious, still unfinished, and still convinced there's more life to live, you're probably who I'm writing for.</p>
+      <Subscribe source={`essay-${essay.id}`} />
+      <ul class="more">{all.map((e) => <li><a href={`/writing/${e.id}/`}>{e.data.title}</a></li>)}</ul>
+    </div>
+  </article>
+</Site>
+<style>
+  .essay { padding-bottom: var(--s5); }
+  .more { display: grid; gap: 0.3rem; font-family: var(--display); font-size: var(--t-lead); margin-top: var(--s4); }
+  .more a { text-decoration: none; }
+  .more a:hover { text-decoration: underline; }
+</style>

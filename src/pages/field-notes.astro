@@ -1,0 +1,87 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import Photo from "../components/Photo.astro";
+const slides = [
+  ["slide-01", "Allow me to reintroduce myself. Jay Sueno."],
+  ["slide-02", "47 / Still starting. I'm 47. And apparently, I'm still just getting started. Surfing at 33. Sober at 40. A father at 45."],
+  ["slide-03", "The old dream. I wanted a big life. A mansion. Millions. World travel. Lavish parties. A beautiful wife and family. Cool friends everywhere. Subtle, I know."],
+  ["slide-04", "Stuck. The dream stayed. I stopped moving. Alcohol and depression made my world smaller. Other people seemed to be moving forward. I was still at the bar."],
+  ["slide-05", "40 / Sober. At 40, I stopped drinking. Sleep came back. So did focus. I trained. Read. Meditated. Went back to school. Most importantly, I started doing the things I'd spent years saying I'd do tomorrow."],
+  ["slide-06", "The life. Some of the life I used to imagine became ordinary Tuesday. Allegra beside me. Our daughter growing up in front of me. Surfing. Nature. Businesses we believe in. A life I once imagined from somewhere else."],
+  ["slide-07", "The cost. The dream and the bill can arrive on the same afternoon. Half-finished Pilates studio. Contractors calling. Bills and payroll. Customers still to find. Outside, waves and sunset. At home, our daughter had been waiting all day."],
+  ["slide-08", "Capacity. I wanted a bigger life. I got one. More love. More freedom. More responsibility. More people depending on me. More to lose. So my capacity has had to grow too."],
+  ["slide-09", "The Long Paddle. I still want to build. I just don't want to miss my life doing it. Business, family, health. Technology, nature, spirit. This is me working that out in public, from the middle of it."],
+  ["slide-10", "The Long Paddle. I don't have it all figured out. I want to keep finding out."],
+];
+const notes = [
+  { date: "October 12, 2026", title: "The Terms and Conditions", url: "https://www.instagram.com/reel/DeX93RpT2az/", text: "I didn't start surfing until I was 33. Fourteen years later, at 47, I'm still trying to get better.", more: "Everyone saw it. Nobody filmed it. A small mercy.", photo: "wave-pocket", alt: "A surfer in a red rash guard crouching low on a steep wave at Pesangan.", cap: "Pesangan, October 2026. Photo by Bren.", ratio: "wide" },
+  { date: "October 11, 2026", title: "Session number two", url: "https://www.instagram.com/reel/DeVakBAT1Cs/", text: "Pesangan in the morning. Salvacion at sunset.", photo: "wave-clip-poster", alt: "A surfer riding a wave with a small rock island behind him, seen from a drone.", cap: "Salvacion, October 7, 2026.", ratio: "wide" },
+  { date: "October 6, 2026", title: "My daughter on the playground", url: "https://www.instagram.com/reel/DeKB73gTAcP/", text: "I think one of the great gifts of childhood is getting to know the world before you have to explain it.", photo: "note-playground", alt: "A frame from the reel of my daughter on the playground.", ratio: "tall" },
+  { date: "October 4, 2026", title: "AI and my daughter", url: "https://www.instagram.com/reel/DeEzfybzWkC/", text: "I think about AI a lot. Especially when I look at my daughter.", photo: "note-ai-sunset", alt: "A frame from the reel, surf at sunset.", ratio: "tall" },
+  { date: "October 3, 2026", title: "The jungle walk", url: "https://www.instagram.com/reel/DeCTlCrTV3I/", text: "I used to think a meaningful life would be easier to recognize. Big milestones. Big wins.", photo: "note-jungle", alt: "A frame from the reel: Jay, Allegra, and their daughter on a jungle path.", ratio: "tall" },
+  { date: "October 2, 2026", title: "Five things I had to unlearn", url: "https://www.instagram.com/p/Dd_B-YNkyTS/", text: "I moved to a small island and brought my old operating system with me. More growth. More efficiency. More convenience.", more: "Community is infrastructure.", photo: "room-practice", alt: "People seated on mats in a long studio with white curtains.", cap: "Malinao, September 30, 2026.", ratio: "wide" },
+  { date: "October 1, 2026", title: "A strange new way of thinking about growth", url: "https://www.instagram.com/reel/Dd9I3zhTOFi/", text: "Building a wellness business has given me a strange new way of thinking about growth.", photo: "note-growth", alt: "A frame from the reel: Jay in a white T-shirt in a treatment chair, an IV bag hanging behind him.", ratio: "tall" },
+  { date: "September 29, 2026", title: "Hold on, let go", url: "https://www.instagram.com/reel/Dd3jA95zQkD/", text: "I thought I was teaching my daughter how to be safe in the water. Turns out I'm learning something too.", photo: "note-holdon", alt: "A frame from the reel: Jay in a blue cap carrying his daughter through a swimming pool.", ratio: "tall" },
+  { date: "September 26, 2026", title: "A letter to my daughter", url: "https://www.instagram.com/reel/Ddvs4ZJT5TU/", text: "I wrote this letter to my daughter before she turns two. She won't understand it yet.", href2: "/writing/a-prayer-for-ember/", photo: "note-letter", alt: "A frame from the reel: Jay standing waist deep in clear green water with his daughter on his arm. The words on screen say, when the day darkens may you stay strong.", ratio: "tall" },
+  { date: "September 25, 2026", title: "First wave", url: "https://www.instagram.com/reel/DdtqzSdz13D/", text: "I spent most of the day trying to solve the future in my head. Then my daughter and I caught a wave.", photo: "sunset-board", alt: "From a drone at sunset: a long red surfboard carrying a parent and small child across calm water.", cap: "September 25, 2026, 4:54 PM.", ratio: "wide" },
+  { date: "September 22, 2026", title: "Seven years", url: "https://www.instagram.com/reel/DdlG432TOyM/", text: "I quit alcohol 7 years ago. Many things have changed. But some things are still present. Doubt, fear, insecurities.", photo: "note-seven", alt: "A frame from the reel: a surfer riding a small wave past a rock island while another surfer paddles in front.", ratio: "wide" },
+  { date: "September 12, 2026", title: "IV day one", url: "https://www.instagram.com/reel/DdLp2dzz0k3/", text: "I'm not fond of needles, so naturally I went first.", photo: "note-iv", alt: "The cover of the reel: Jay with staff at the clinic, under the words Vultun IV therapy and biohacking, day one.", ratio: "tall" },
+];
+---
+<Site title="Field notes" description="Jay Sueno's field notes from Siargao: posts, photos, and short films on surf, family, sobriety, and building a business, archived from Instagram." path="/field-notes/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="Field notes" title="Filmed on a phone, mostly. Posted by me, always." lead="Short pieces from Instagram, kept here so they don't vanish into a feed. Follow along at @jay_sueno." updated="November 7, 2026" />
+
+  <section aria-labelledby="reintro-h" class="reintro">
+    <div class="axis flow" style="--flow: var(--s2)">
+      <p class="caption num">October 15, 2026</p>
+      <h2 id="reintro-h" class="title"><a href="https://www.instagram.com/p/DegSDQTE8A-/">Allow me to reintroduce myself</a></h2>
+    </div>
+    <ul class="strip" tabindex="0" aria-label="Ten slides from the post">
+      {slides.map(([id, text]) => <li><Photo id={id} alt={text} sizes="(min-width: 860px) 26vw, 72vw" widths={[480, 864]} /></li>)}
+    </ul>
+    <div class="axis measure flow small quiet" style="--flow: var(--s2)">
+      <p>I'm not interested in choosing between ambition and presence. I want to build things. I want to make money. I want to surf better and stay strong as I age. I want to use technology without letting it own my attention.</p>
+    </div>
+  </section>
+
+  <ol class="log axis">
+    {notes.map((n) => (
+      <li class:list={["log__row", { "log__row--photo": n.photo }]}>
+        <div class="log__text flow" style="--flow: var(--s2)">
+          <p class="caption num quiet">{n.date}</p>
+          <h3 class="title"><a href={n.url}>{n.title}</a></h3>
+          <p>{n.text}</p>
+          {n.more && <p class="landing">{n.more}</p>}
+          {n.href2 && <p class="small"><a href={n.href2}>Read the letter</a></p>}
+        </div>
+        {n.photo && (
+          <figure class:list={["log__fig", `log__fig--${n.ratio}`]}>
+            <a href={n.url} class="log__watch" aria-label={`Watch ${n.title} on Instagram`}><Photo id={n.photo} alt={n.alt ?? ""} sizes="(min-width: 900px) 46vw, 100vw" /></a>
+            {n.cap && <figcaption class="caption num">{n.cap}</figcaption>}
+          </figure>
+        )}
+      </li>
+    ))}
+  </ol>
+  <section class="band axis"><a class="ask" href="https://www.instagram.com/jay_sueno" rel="me">Follow @jay_sueno</a></section>
+</Site>
+<style>
+  .reintro { padding-block: var(--s4) var(--s5); }
+  .strip { display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x proximity; padding: var(--s4) var(--gutter) var(--s4) var(--axis); scrollbar-width: thin; }
+  .strip li { flex: 0 0 clamp(16rem, 26vw, 25rem); scroll-snap-align: start; }
+  .strip :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+  .log { border-top: 1px solid var(--rule); margin-inline: 0; }
+  .log__row { display: grid; gap: var(--s4) var(--s6); padding-block: var(--s5); border-bottom: 1px solid var(--rule); }
+  .log__text { max-width: 34rem; }
+  .log__text a { text-decoration: none; } .log__text a:hover { text-decoration: underline; }
+  .log__fig { margin: 0; }
+  .log__watch { display: block; transition: opacity 200ms var(--ease); }
+  .log__watch:hover { opacity: 0.88; }
+  .log__fig :global(img) { width: 100%; height: auto; }
+  .log__fig--wide :global(img) { aspect-ratio: 3 / 2; object-fit: cover; }
+  .log__fig--tall { max-width: 22rem; }
+  .log__fig--tall :global(img) { aspect-ratio: 9 / 16; object-fit: cover; }
+  .log__fig figcaption { margin-top: var(--s1); }
+  @media (min-width: 900px) { .log__row--photo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); } }
+</style>

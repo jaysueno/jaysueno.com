@@ -1,0 +1,28 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import { EDITION } from "../data/identity";
+---
+<Site title="Colophon" description="How jaysueno.com is made: the type, the photographs, the code, and the rules." path="/colophon/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="Colophon" title={`Edition ${EDITION.number}. ${EDITION.label}.`} lead="Written and directed by Jay Sueno. Built with Claude Code, which wrote nearly all of the code and none of the life." />
+  <section class="band band--tight axis cols cols--2">
+    <div class="flow">
+      <h2 class="kicker">The look</h2>
+      <p class="small">Playfair Display for what is said. Avenir Next for what is known, or Nunito Sans on devices without it. One left edge for everything, from my Instagram carousels.</p>
+      <p class="small">The ground is the color of the water in the first photograph. The orange is the small leaves floating on it. The weeks chart on the home page borrows the leaves.</p>
+      <h2 class="kicker">The photographs</h2>
+      <p class="small">All real. No stock, no AI. Surf at Pesangan by Bren. The rest are mine, or from my family's phones and drone. Captions say where and when, read from the file.</p>
+    </div>
+    <div class="flow">
+      <h2 class="kicker">The machine</h2>
+      <p class="small">Static pages from Astro, served from one small server through Cloudflare. Every page works with JavaScript off, and has a Markdown twin for agents.</p>
+      <h2 class="kicker">The rules</h2>
+      <ul class="small flow" style="--flow: var(--s1)">
+        <li>Nothing invented. Every number has a date.</li>
+        <li>Specifics over wisdom. Show the broken pump.</li>
+        <li>No em dashes.</li>
+        <li>The design should never make the life look cleaner than it is.</li>
+      </ul>
+    </div>
+  </section>
+</Site>

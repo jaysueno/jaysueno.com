@@ -1,0 +1,80 @@
+---
+import { nav } from "../data/identity";
+const { overPhoto = false, current = "/" } = Astro.props;
+const isCurrent = (href: string) => current === href || (href !== "/" && current.startsWith(href));
+---
+<header class:list={["site-nav", { "site-nav--over": overPhoto }]}>
+  <a class="site-nav__name" href="/" aria-label="Jay Sueno, home">Jay Sueno</a>
+  <nav aria-label="Main">
+    <ul class="site-nav__links">
+      {nav.map((n) => (
+        <li><a href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</a></li>
+      ))}
+      <li><a class="site-nav__hello" href="/open-to/" aria-current={isCurrent("/open-to/") ? "page" : undefined}>Say hello</a></li>
+    </ul>
+  </nav>
+  <button class="site-nav__menu" type="button" popovertarget="site-menu" aria-label="Open the menu">Menu</button>
+  <div id="site-menu" popover class="site-menu">
+    <button class="site-menu__close" type="button" popovertarget="site-menu" popovertargetaction="hide">Close</button>
+    <ul>
+      {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      <li><a href="/open-to/">Say hello</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  // Hide on the way down, show on the way up. Without this script the nav simply stays at the top.
+  const bar = document.querySelector<HTMLElement>(".site-nav");
+  if (bar) {
+    let last = scrollY;
+    let waiting = false;
+    const update = () => {
+      waiting = false;
+      const y = Math.max(0, scrollY);
+      const moved = y - last;
+      if (Math.abs(moved) < 6) return;
+      const pastTop = y > 80;
+      bar.classList.toggle("is-solid", pastTop);
+      bar.classList.toggle("is-hidden", pastTop && moved > 0);
+      last = y;
+    };
+    addEventListener("scroll", () => {
+      if (!waiting) { waiting = true; requestAnimationFrame(update); }
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  /* Sits at the top of the page. Scroll down and it slides away; scroll up and it comes back on a solid bar. */
+  .site-nav {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4);
+    padding: var(--s3) var(--gutter) var(--s3) var(--axis);
+    position: sticky; top: 0; z-index: 40;
+    transition: transform 260ms var(--ease), background-color 200ms linear;
+  }
+  .site-nav--over { position: fixed; inset: 0 0 auto 0; }
+  /* Keep the height unchanged here. On in-flow pages a change in height moves the page and reads as a scroll up. */
+  .site-nav.is-solid { background: #0B1413; box-shadow: 0 1px 0 rgb(242 237 226 / 0.1); }
+  .site-nav.is-hidden { transform: translateY(-100%); }
+  .site-nav:focus-within { transform: none; }
+  @media (prefers-reduced-motion: reduce) { .site-nav { transition: none; } }
+  .site-nav__name {
+    font-family: var(--display); font-size: 1.1875rem; text-decoration: none;
+    color: var(--color-primary);
+  }
+  .site-nav__links { display: flex; gap: clamp(0.9rem, 1.6vw, 1.6rem); font-size: 0.9375rem; font-weight: 500; }
+  .site-nav__links a { text-decoration: none; color: var(--color-primary); opacity: 0.86; transition: opacity 150ms; }
+  .site-nav__links a:hover, .site-nav__links a[aria-current] { opacity: 1; color: var(--color-primary); text-decoration: underline; }
+  .site-nav__hello { color: var(--color-accent) !important; opacity: 1 !important; }
+  .site-nav__menu { display: none; background: none; border: 0; padding: 0; font-size: 0.9375rem; font-weight: 500; color: var(--color-primary); }
+  .site-menu { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; border: 0; margin: 0; padding: var(--s3) var(--gutter) var(--s5) var(--axis); background: var(--color-bg); color: var(--color-primary); }
+  .site-menu__close { display: block; margin-left: auto; background: none; border: 0; font-size: 0.9375rem; font-weight: 500; color: var(--color-primary); padding: 0; }
+  .site-menu ul { margin-top: var(--s5); }
+  .site-menu li + li { margin-top: var(--s2); }
+  .site-menu a { font-family: var(--display); font-size: 2.25rem; line-height: 1.1; text-decoration: none; color: var(--color-primary); }
+  @media (max-width: 860px) {
+    nav { display: none; }
+    .site-nav__menu { display: block; }
+  }
+</style>

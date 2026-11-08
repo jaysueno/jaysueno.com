@@ -1,0 +1,24 @@
+---
+import { identity } from "../data/identity";
+const { source = "site", label = "Get the next one by email." } = Astro.props;
+const action = `${identity.substack}/subscribe`;
+---
+<form class="subscribe" action={action} method="get" target="_blank" rel="noopener" data-agent="skip" data-source={source}>
+  <label class="kicker" for={`sub-${source}`}>{label}</label>
+  <div class="subscribe__row">
+    <input id={`sub-${source}`} type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+    <input type="hidden" name="utm_source" value="jaysueno.com" />
+    <input type="hidden" name="utm_medium" value="site" />
+    <input type="hidden" name="utm_campaign" value={source} />
+    <button type="submit">Subscribe</button>
+  </div>
+  <p class="caption quiet">The Long Paddle, on Substack. Free. Two a month, when I keep my word.</p>
+</form>
+<style>
+  .subscribe { display: grid; gap: var(--s2); max-width: 32rem; }
+  .subscribe__row { display: flex; border-bottom: 1px solid currentColor; }
+  .subscribe input[type="email"] { flex: 1; min-width: 0; background: none; border: 0; padding: 0.7rem 0; font-size: var(--t-body); outline-offset: 2px; }
+  .subscribe input::placeholder { color: inherit; opacity: 0.55; }
+  .subscribe button { background: none; border: 0; padding: 0.7rem 0 0.7rem 1rem; font-weight: 600; cursor: pointer; }
+  .subscribe button:hover { color: var(--link-hover, var(--color-accent)); }
+</style>

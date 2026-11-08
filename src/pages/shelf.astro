@@ -1,0 +1,68 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import { books } from "../data/books";
+import { playlists, topSongs, topArtists, topAlbums, LISTENING_READ } from "../data/listening";
+const readLabel = new Date(LISTENING_READ + "T12:00:00+08:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "Asia/Manila" });
+// The soul comes first, by Jay's call, November 7, 2026.
+const shelves = ["The soul", "Getting sober", "Showing up", "Data"];
+if (books.some((b) => !shelves.includes(b.shelf))) throw new Error("A book is on a shelf the page doesn't list.");
+---
+<Site title="The shelf" description="Books Jay Sueno keeps recommending, with a line from each and what he has said about it, plus what he listens to: his Vultun playlists and his top songs, artists, and albums." path="/shelf/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The shelf" title="The books I keep recommending." lead="A line from each one, and what I've said about it where I've said something. This shelf is short because I'm not padding it." />
+  {shelves.map((s) => (
+    <section class="axis band band--tight flow">
+      <h2 class="kicker">{s}</h2>
+      <ul class="shelf">
+        {books.filter((b) => b.shelf === s).map((b) => (
+          <li>
+            <h3 class="title"><a href={b.link}>{b.title}</a></h3>
+            <p class="caption quiet">{b.author}</p>
+            {b.quote && <blockquote class="shelf__quote">"{b.quote}"{b.from && <cite class="caption quiet shelf__from">From {b.from}</cite>}</blockquote>}
+            {b.words && <p class="small">{b.words}</p>}
+            {b.where && <p class="caption quiet">Me, in {b.where}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+  <section id="listening" class="paper band" aria-labelledby="listening-h"><div class="axis flow">
+    <p class="kicker">Listening</p>
+    <h2 id="listening-h" class="story">What I'm listening to.</h2>
+    <p class="caption quiet num">From my Spotify, the past year, read {readLabel}.</p>
+    <h3 class="title">The Vultun playlists</h3>
+    <div class="playlists">
+      {playlists.map((p) => (
+        <iframe title={`Spotify playlist: ${p.name}`} src={`https://open.spotify.com/embed/playlist/${p.id}?utm_source=generator&theme=0`} width="100%" height="152" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" style="border:0;border-radius:12px"></iframe>
+      ))}
+    </div>
+    <div class="charts">
+      <div class="flow" style="--flow: var(--s2)">
+        <h3 class="title">Top 10 songs</h3>
+        <ol class="chart">{topSongs.map((s) => <li><a href={s.url}>{s.name}</a><span class="caption quiet">{s.artist}</span></li>)}</ol>
+      </div>
+      <div class="flow" style="--flow: var(--s2)">
+        <h3 class="title">Top 5 artists</h3>
+        <ol class="chart">{topArtists.map((a) => <li><a href={a.url}>{a.name}</a></li>)}</ol>
+        <h3 class="title">Top 5 albums</h3>
+        <ol class="chart">{topAlbums.map((a) => <li><a href={a.url}>{a.name}</a><span class="caption quiet">{a.artist}</span></li>)}</ol>
+      </div>
+    </div>
+  </div></section>
+  <section class="axis band flow measure"><p class="lead">Tell me what I should read next.</p><p><a class="ask" href="/open-to/">Say hello</a></p></section>
+</Site>
+<style>
+  .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: var(--s5) var(--s5); border-top: 1px solid var(--rule); padding-top: var(--s4); }
+  .shelf li > * + * { margin-top: 0.35rem; }
+  .shelf h3 a { text-decoration: none; }
+  .shelf h3 a:hover { text-decoration: underline; color: var(--color-accent); }
+  .shelf li > .shelf__quote { margin: var(--s2) 0; font-family: var(--display); font-size: var(--t-lead); line-height: 1.3; }
+  .playlists { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr)); gap: var(--s3); }
+  .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--s5); border-top: 1px solid var(--rule); padding-top: var(--s4); }
+  .chart { list-style: decimal; padding-left: 1.4em; }
+  .chart li { padding-block: 0.3rem; border-bottom: 1px solid var(--rule); }
+  .chart li a { text-decoration: none; font-weight: 600; }
+  .chart li a:hover { text-decoration: underline; }
+  .chart li .caption { display: block; }
+  .shelf__from { display: block; margin-top: 0.35rem; font-family: var(--sans); font-style: normal; }
+</style>

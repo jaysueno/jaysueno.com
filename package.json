@@ -1,0 +1,37 @@
+{
+  "name": "jaysueno.com",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The code behind jaysueno.com: a personal site in plain files an agent can edit. A snapshot of a private monorepo app.",
+  "license": "MIT",
+  "author": "Jay Sueno",
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "packageManager": "pnpm@10.30.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild-agents.mjs",
+    "preview": "astro preview",
+    "clean": "rm -rf dist .astro",
+    "sync:essays": "node scripts/sync-substack.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/nunito-sans": "^5.3.0",
+    "@fontsource-variable/playfair-display": "^5.3.0",
+    "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "turndown": "^7.2.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

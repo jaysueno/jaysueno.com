@@ -1,0 +1,10 @@
+---
+const { kicker, title, lead, updated } = Astro.props;
+---
+<header class="head axis flow" style="--flow: var(--s3)">
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h1 class="story">{title}</h1>
+  {lead && <p class="lead measure">{lead}</p>}
+  {updated && <p class="caption quiet num">Last updated {updated}.</p>}
+  <slot />
+</header>

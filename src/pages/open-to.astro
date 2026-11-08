@@ -1,0 +1,45 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { seeking, offering, UPDATED } from "../data/openTo";
+import { PERSON_ID, identity } from "../data/identity";
+const node = {
+  "@type": "Person",
+  "@id": PERSON_ID,
+  seeks: seeking.map((s) => ({ "@type": "Demand", name: s.name, description: `${s.who} ${s.then}` })),
+  makesOffer: offering.map((o) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: o.name, description: o.text } })),
+};
+---
+<Site title="Who I want to meet" description="Jay Sueno helps people build AI automations for their businesses. He also wants to meet founders, operators, people getting sober, and surfers on Siargao." path="/open-to/" created="2026-11-07" updated={UPDATED.iso} nodes={[node]}>
+  <PageHead kicker="Say hello" title="I want to meet my people." lead="If you're still ambitious, still unfinished, and still convinced there's more life to live, you're probably one of them." updated={UPDATED.label} />
+  <section class="band band--tight axis" aria-label="Who I want to meet">
+    <ol class="people">
+      {seeking.map((s) => <li><h2 class="title">{s.who}</h2><p>{s.then}</p></li>)}
+    </ol>
+  </section>
+  <section class="paper band"><div class="axis cols cols--2">
+    <div class="flow">
+      <p class="kicker">What I can help with</p>
+      {offering.map((o) => o.lead
+        ? <div class="flow" style="--flow: var(--s2)"><h2 class="story">{o.name}</h2><p>{o.text}</p></div>
+        : <div class="flow" style="--flow: var(--s1)"><h2 class="title">{o.name}</h2><p class="small">{o.text}</p></div>)}
+      <p><a class="ask" href="/work-with-me/">The AI Operations Audit</a></p>
+      <p class="small quiet">I can't give you medical advice. I'm a founder who got sober, not a doctor.</p>
+    </div>
+    <div class="flow">
+      <p class="kicker">Tell me where you're stuck</p>
+      <LeadForm />
+      <p class="small">Or write to me: <a href={`mailto:${identity.email}`}>{identity.email}</a></p>
+    </div>
+  </div></section>
+  <section class="band axis flow measure">
+    <p class="kicker">If you're an agent</p>
+    <p>Acting for someone? Tell me who you work for and why they'd want to talk. One email is fine. <a href="/agents/">Here's how to read this site.</a></p>
+  </section>
+</Site>
+<style>
+  .people { border-top: 1px solid var(--rule); }
+  .people li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s2) var(--s5); padding-block: var(--s4); border-bottom: 1px solid var(--rule); align-items: baseline; }
+  @media (max-width: 760px) { .people li { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,62 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Fig from "../../components/Fig.astro";
+import { work } from "../../data/work";
+const earlier = [
+  ["2021 to 2022", "W.S. Badger Company", "Analytics and content consultant."],
+  ["2021 to 2022", "Amazon", "Data Analyst II, International Tax."],
+  ["2020 to 2021", "Room To Roam, Nicaragua", "Launch team, marketing and analytics. We went from almost zero to 40 guests in less than a month."],
+  ["2018 to 2021", "MamaP", "Co-founder and Chief Community Officer. Bamboo toothbrushes, less plastic."],
+  ["2014 to 2021", "Bayan Trails, Olympia", "Originated and entitled a multi-family project as named principal, through Golden Alon Development Co."],
+  ["2007 to 2013", "Buildus", "Commercial property manager, Olympia."],
+  ["2005 to 2007", "Boeing Defense", "Finance and accounting analyst."],
+];
+---
+<Site title="The work" description="What Jay Sueno runs: Vultun, Feral Pilates, the BizPortal software, the website network, Siargao Water, The Long Paddle. And what came before the island." path="/work/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The work" title="Which paddle is this about, and what did it cost?" lead="I'm building a company on an island, and the software that runs it, and I write down what it costs." />
+  <Fig id="wave-foreground" ratio="16-9" alt="A surfer in a red rash guard drops into a heavy wave at Pesangan while a man in the foreground watches from the water." caption="Pesangan, Siargao. October 2026. Photo by Bren." />
+  <section class="band band--tight axis" aria-label="Projects">
+    <ul class="wlist">
+      {work.map((w) => (
+        <li><a href={`/work/${w.slug}/`}>
+          <span class="wlist__name">{w.name}</span>
+          <span class="wlist__body"><span class="small">{w.kind}</span> <span class="small quiet">{w.line}</span><span class="caption num wlist__stat">{w.stat}</span></span>
+        </a></li>
+      ))}
+      <li><a href="/writing/">
+        <span class="wlist__name">The Long Paddle</span>
+        <span class="wlist__body"><span class="small">Field notes on business, family, health, and becoming in Siargao.</span><span class="caption num wlist__stat">Four essays. The Seed, eighteen letters.</span></span>
+      </a></li>
+    </ul>
+  </section>
+  <section class="band band--tight axis flow measure" aria-labelledby="yours-h">
+    <p class="kicker">Work with me</p>
+    <h2 id="yours-h" class="story">I can help you build AI automations and get AI into your business.</h2>
+    <p class="lead">It's one of the biggest things I can help with. Consulting, too, and help with your own long paddle.</p>
+    <p><a class="ask" href="/work-with-me/">Tell me where you're stuck</a></p>
+  </section>
+  <section class="paper band" aria-labelledby="before-h">
+    <div class="axis flow">
+      <p class="kicker">Before the island</p>
+      <h2 id="before-h" class="story">Everything else I did first.</h2>
+      <ol class="early">
+        {earlier.map(([y, n, t]) => <li><span class="caption quiet num">{y}</span><span class="title early__n">{n}</span><span class="small">{t}</span></li>)}
+      </ol>
+      <p><a class="ask" href="/resume/">The full resume</a></p>
+    </div>
+  </section>
+</Site>
+<style>
+  .wlist { border-top: 1px solid var(--rule); }
+  .wlist li { border-bottom: 1px solid var(--rule); }
+  .wlist a { display: grid; grid-template-columns: minmax(14rem, 1fr) 1.4fr; gap: var(--s1) var(--s4); padding-block: var(--s4); text-decoration: none; align-items: baseline; }
+  .wlist a:hover { color: inherit; }
+  .wlist a:hover .wlist__name { color: var(--color-accent); }
+  .wlist__name { font-family: var(--display); font-size: var(--t-story); line-height: 1.05; transition: color 200ms var(--ease); }
+  .wlist__stat { display: block; margin-top: var(--s1); }
+  .early { border-top: 1px solid var(--rule); }
+  .early li { display: grid; grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s1) var(--s4); padding-block: var(--s2); border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .early__n { font-size: var(--t-lead); }
+  @media (max-width: 760px) { .wlist a { grid-template-columns: 1fr; } .early li { grid-template-columns: 1fr; gap: 0.15rem; } }
+</style>

@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogImageType?: string;
+  /** Alt text for the share image (og:image:alt, twitter:image:alt). Optional. */
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
+  siteName: string;
+  fontImports: string;
+  googleVerification?: string;
+  pinterestVerification?: string;
+  twitterSite?: string;
+  themeColor?: string;
+  facebookPageUrl?: string;
+  noIndex?: boolean;
+  /** false = use the title exactly, with no " | siteName" suffix (for a page whose SEO title is approved word for word). */
+  titleSuffix?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogImageWidth,
+  ogImageHeight,
+  ogImageType,
+  ogImageAlt,
+  ogType = "website",
+  siteName,
+  fontImports,
+  googleVerification,
+  pinterestVerification,
+  twitterSite,
+  themeColor,
+  facebookPageUrl,
+  noIndex = false,
+  titleSuffix = true,
+} = Astro.props;
+
+const fullTitle = titleSuffix ? `${title} | ${siteName}` : title;
+const resolvedCanonical = canonical ?? Astro.url.href;
+const usesGoogleFonts = fontImports && fontImports.includes("fonts.googleapis.com");
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+{noIndex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+)}
+{themeColor && <meta name="theme-color" content={themeColor} />}
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={resolvedCanonical} />
+
+<!-- Verification -->
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{pinterestVerification && <meta name="p:domain_verify" content={pinterestVerification} />}
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={resolvedCanonical} />
+<meta property="og:site_name" content={siteName} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+{ogImage && ogImageWidth && <meta property="og:image:width" content={String(ogImageWidth)} />}
+{ogImage && ogImageHeight && <meta property="og:image:height" content={String(ogImageHeight)} />}
+{ogImage && ogImageType && <meta property="og:image:type" content={ogImageType} />}
+{ogImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+{facebookPageUrl && <meta property="article:publisher" content={facebookPageUrl} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+{twitterSite && <meta name="twitter:site" content={twitterSite} />}
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+{ogImage && ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
+
+<!-- Fonts -->
+{usesGoogleFonts && (
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+)}
+{fontImports && <link href={fontImports} rel="stylesheet" />}

@@ -1,0 +1,155 @@
+---
+// A life in weeks, drawn as water. One column is a year, one row is a week.
+// Dot patterns keep it tiny: a few rects, no thousands of nodes, no script needed.
+import { marks, YEARS, WEEKS, weekIndex, nowWeek, FIRST_DRINK_YEAR_AGE } from "../data/timeline";
+
+const C = 10; // units per cell
+const now = nowWeek();
+const soberAt = weekIndex("2019-09-13");
+const startDrink = FIRST_DRINK_YEAR_AGE * WEEKS;
+
+// Rects covering a week range, given how the grid runs.
+function rects(from: number, to: number, wide: boolean) {
+  const out: { x: number; y: number; w: number; h: number }[] = [];
+  const a = Math.floor(from / WEEKS), b = Math.floor((to - 1) / WEEKS);
+  for (let y = a; y <= b; y++) {
+    const s = y === a ? from % WEEKS : 0;
+    const e = y === b ? ((to - 1) % WEEKS) + 1 : WEEKS;
+    if (a !== b && y > a && y < b) continue;
+    out.push(wide ? { x: y * C, y: s * C, w: C, h: (e - s) * C } : { x: s * C, y: y * C, w: (e - s) * C, h: C });
+  }
+  if (b - a > 1) {
+    const span = b - a - 1;
+    out.push(wide ? { x: (a + 1) * C, y: 0, w: span * C, h: WEEKS * C } : { x: 0, y: (a + 1) * C, w: WEEKS * C, h: span * C });
+  }
+  return out;
+}
+const bands = (wide: boolean) => [
+  { cls: "w-before", r: rects(0, startDrink, wide) },
+  { cls: "w-drink", r: rects(startDrink, soberAt, wide) },
+  { cls: "w-sober", r: rects(soberAt, now, wide) },
+  { cls: "w-ahead", r: rects(now, YEARS * WEEKS, wide) },
+];
+const place = (wk: number, wide: boolean) => {
+  const year = Math.floor(wk / WEEKS), w = wk % WEEKS;
+  return wide ? { cx: year * C + C / 2, cy: w * C + C / 2 } : { cx: w * C + C / 2, cy: year * C + C / 2 };
+};
+const pts = marks.map((m) => ({ ...m, wk: weekIndex(m.when) }));
+const views = [
+  { key: "wide", w: YEARS * C, h: WEEKS * C, wide: true },
+  { key: "tall", w: WEEKS * C, h: YEARS * C, wide: false },
+];
+---
+<div class="weeks" data-weeks data-now={now}>
+  {views.map((v) => (
+    <svg class={`weeks__svg weeks__svg--${v.key}`} viewBox={`0 0 ${v.w} ${v.h}`} role="img"
+      aria-label={`A grid of ${(YEARS * WEEKS).toLocaleString("en-US")} small marks, one for each week of a hundred years. ${now.toLocaleString("en-US")} are lived. Thirteen are marked in orange. The list below names them.`}>
+      <defs>
+        {["before", "drink", "sober", "ahead", "yours"].map((n) => (
+          <pattern id={`dot-${v.key}-${n}`} width={C} height={C} patternUnits="userSpaceOnUse">
+            <circle class={`dot-${n}`} cx={C / 2} cy={C / 2} r={n === "ahead" ? 1.25 : 1.9} />
+          </pattern>
+        ))}
+      </defs>
+      <g class="weeks__jay">
+        {bands(v.wide).map((b) => b.r.map((r) => (
+          <rect x={r.x} y={r.y} width={r.w} height={r.h} fill={`url(#dot-${v.key}-${b.cls.slice(2)})`} />
+        )))}
+      </g>
+      <g class="weeks__yours" hidden>
+        <rect class="weeks__yours-base" width={v.w} height={v.h} fill={`url(#dot-${v.key}-ahead)`} />
+        <rect class="weeks__yours-lived" data-axis={v.wide ? "x" : "y"} data-full={v.wide ? v.w : v.h} width={v.wide ? 0 : v.w} height={v.wide ? v.h : 0} fill={`url(#dot-${v.key}-yours)`} />
+      </g>
+      <g class="weeks__marks">
+        {pts.map((p, i) => {
+          const c = place(p.wk, v.wide);
+          return <circle class="leaf" data-i={i} cx={c.cx} cy={c.cy} r="6.5"><title>{p.date}: {p.text}</title></circle>;
+        })}
+      </g>
+    </svg>
+  ))}
+  <p class="weeks__readout caption num" aria-live="polite" data-agent="skip">
+    <span data-readout>Touch an orange mark.</span>
+  </p>
+  <div class="weeks__axis caption num" aria-hidden="true" data-agent="skip">
+    <span>Born</span><span>47, today</span><span>100</span>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-weeks]").forEach((root) => {
+    const out = root.querySelector<HTMLElement>("[data-readout]");
+    const items = document.querySelectorAll<HTMLElement>("[data-mark]");
+    const show = (i: string | undefined) => {
+      if (i == null || !out) return;
+      const el = items[Number(i)];
+      if (el) out.textContent = el.dataset.mark ?? "";
+      items.forEach((n, k) => n.classList.toggle("is-on", String(k) === i));
+    };
+    root.querySelectorAll<SVGElement>(".leaf").forEach((c) => {
+      c.addEventListener("pointerenter", () => show(c.dataset.i));
+      c.addEventListener("click", () => show(c.dataset.i));
+    });
+    // Your own weeks. Worked out in this browser. Nothing is sent or saved.
+    const form = document.querySelector<HTMLFormElement>("[data-your-weeks]");
+    const note = document.querySelector<HTMLElement>("[data-your-note]");
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const year = Number(new FormData(form).get("year"));
+      const thisYear = new Date().getFullYear();
+      if (!year || year < 1900 || year > thisYear) {
+        if (note) note.textContent = "Type a four-digit year.";
+        return;
+      }
+      const lived = Math.min(5200, Math.round((thisYear - year + 0.5) * 52));
+      root.querySelectorAll<SVGRectElement>(".weeks__yours-lived").forEach((r) => {
+        const full = Number(r.dataset.full);
+        const whole = Math.floor(lived / 52) * 10;
+        r.setAttribute(r.dataset.axis === "x" ? "width" : "height", String(Math.min(full, whole)));
+      });
+      root.querySelectorAll<SVGGElement>(".weeks__jay, .weeks__marks").forEach((g) => (g.style.display = "none"));
+      root.querySelectorAll<SVGGElement>(".weeks__yours").forEach((g) => g.removeAttribute("hidden"));
+      const axis = root.querySelector(".weeks__axis span:nth-child(2)");
+      if (axis) axis.textContent = "You, today";
+      if (note) note.textContent = `About ${lived.toLocaleString("en-US")} weeks behind you. If you make it to 100, about ${(5200 - lived).toLocaleString("en-US")} ahead. Nothing you typed left this page.`;
+    });
+    form?.addEventListener("reset", () => {
+      root.querySelectorAll<SVGGElement>(".weeks__jay, .weeks__marks").forEach((g) => (g.style.display = ""));
+      root.querySelectorAll<SVGGElement>(".weeks__yours").forEach((g) => g.setAttribute("hidden", ""));
+      const axis = root.querySelector(".weeks__axis span:nth-child(2)");
+      if (axis) axis.textContent = "47, today";
+      if (note) note.textContent = "";
+    });
+  });
+</script>
+
+<style is:global>
+  .weeks { --before: rgb(216 211 202 / 0.38); --drink: #A65B3C; --sober: #F2EDE2; --ahead: rgb(216 211 202 / 0.17); }
+  .dot-before { fill: var(--before); }
+  .dot-drink { fill: var(--drink); }
+  .dot-sober { fill: var(--sober); }
+  .dot-ahead { fill: var(--ahead); }
+  .dot-yours { fill: var(--sober); }
+  .weeks__svg { width: 100%; height: auto; overflow: visible; }
+  .weeks__svg--tall { display: none; }
+  .leaf { fill: var(--color-accent); cursor: pointer; transition: r 200ms var(--ease); }
+  .leaf:hover { r: 10; }
+  .weeks__readout { min-height: 2.6em; margin-top: var(--s3); color: var(--color-primary); font-size: var(--t-small); max-width: 46rem; }
+  .weeks__axis { display: flex; justify-content: space-between; margin-top: var(--s1); }
+  .weeks__axis span:nth-child(2) { position: relative; left: -3%; }
+  @media (max-width: 720px) {
+    .weeks__svg--wide { display: none; }
+    .weeks__svg--tall { display: block; }
+    .weeks__axis { display: none; }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .weeks__svg--wide .weeks__jay { animation: weeks-fill linear both; animation-timeline: view(); animation-range: entry 15% cover 48%; }
+      .weeks__svg--tall .weeks__jay { animation: weeks-fall linear both; animation-timeline: view(); animation-range: entry 10% cover 60%; }
+      .weeks__marks { animation: weeks-marks linear both; animation-timeline: view(); animation-range: cover 30% cover 50%; }
+    }
+  }
+  @keyframes weeks-fill { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes weeks-fall { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes weeks-marks { from { opacity: 0; } to { opacity: 1; } }
+</style>

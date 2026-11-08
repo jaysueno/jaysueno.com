@@ -1,0 +1,57 @@
+---
+import Site from "../layouts/Site.astro";
+import { roles, education, boards, languages, skills } from "../data/resume";
+import { identity, links } from "../data/identity";
+---
+<Site title="Resume" description="The resume of Jay Sueno: founder and CEO of Vultun, previously Amazon, MamaP, Golden Alon, and Boeing. Data science certificate from UC San Diego." path="/resume/" created="2026-11-07" updated="2026-11-07">
+  <div class="paper cv">
+    <header class="axis head flow" style="--flow: var(--s2)">
+      <p class="kicker">Resume</p>
+      <h1 class="story">Jay Sueno</h1>
+      <p class="lead measure">Founder, operator, and writer. {identity.place}.</p>
+      <p class="small num"><a href={`mailto:${identity.email}`}>{identity.email}</a> · <a href="https://jaysueno.com">jaysueno.com</a> · <a href="https://www.linkedin.com/in/jaysueno">linkedin.com/in/jaysueno</a></p>
+      <p class="small no-print"><button type="button" class="printme" onclick="window.print()">Print or save as PDF</button> · <a href="/resume.json">resume.json</a></p>
+    </header>
+    <section class="axis band band--tight" aria-labelledby="exp">
+      <h2 id="exp" class="kicker">Experience</h2>
+      <ol class="cv__list">
+        {roles.map((r) => (
+          <li class="cv__row">
+            <p class="caption quiet num">{r.when}</p>
+            <div>
+              <h3 class="cv__t">{r.title}</h3>
+              <p class="small">{r.org}, {r.place}</p>
+              {r.points.length > 0 && <ul class="cv__pts small">{r.points.map((p) => <li>{p}</li>)}</ul>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+    <section class="axis band band--tight" aria-labelledby="edu">
+      <h2 id="edu" class="kicker">Education</h2>
+      <ol class="cv__list">
+        {education.map((e) => (
+          <li class="cv__row"><p class="caption quiet num">{e.when}</p><div><h3 class="cv__t">{e.school}</h3><p class="small">{e.what}</p>{e.note && <p class="small quiet">{e.note}</p>}</div></li>
+        ))}
+      </ol>
+    </section>
+    <section class="axis band band--tight cv__cols" aria-label="Boards, skills and languages">
+      <div><h2 class="kicker">Boards</h2><ul class="small cv__plain">{boards.map((b) => <li>{b.role}, {b.org}. {b.when}.</li>)}</ul></div>
+      <div><h2 class="kicker">Skills</h2><ul class="small cv__plain">{skills.map((s) => <li>{s}</li>)}</ul></div>
+      <div><h2 class="kicker">Languages</h2><ul class="small cv__plain">{languages.map((l) => <li>{l}</li>)}</ul></div>
+    </section>
+    <section class="axis band band--tight no-print small"><p>Elsewhere: {links.map((l, i) => <><a href={l.url}>{l.label}</a>{i < links.length - 1 ? " · " : ""}</>)}</p></section>
+  </div>
+</Site>
+<style>
+  .printme { background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+  .cv__list { margin-top: var(--s3); border-top: 1px solid var(--rule); }
+  .cv__row { display: grid; grid-template-columns: 12rem minmax(0, 46rem); gap: var(--s1) var(--s4); padding-block: var(--s3); border-bottom: 1px solid var(--rule); }
+  .cv__t { font-family: var(--display); font-size: var(--t-lead); font-weight: 400; line-height: 1.2; }
+  .cv__pts { list-style: disc; padding-left: 1.1em; margin-top: var(--s1); }
+  .cv__pts li + li { margin-top: 0.25rem; }
+  .cv__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--s5); }
+  .cv__plain { margin-top: var(--s2); display: grid; gap: 0.25rem; }
+  @media (max-width: 640px) { .cv__row { grid-template-columns: 1fr; } }
+  @media print { .cv :global(.band), .cv :global(.head) { padding-block: 0.5rem !important; } .cv__row { padding-block: 0.35rem; break-inside: avoid; } }
+</style>

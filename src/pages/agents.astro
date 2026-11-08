@@ -1,0 +1,46 @@
+---
+import Site from "../layouts/Site.astro";
+import PageHead from "../components/PageHead.astro";
+import { identity } from "../data/identity";
+const files = [
+  ["/llms.txt", "A short map of this site, generated from the pages at build time."],
+  ["/index.md", "Every page has a Markdown twin. Add index.md to any URL, or send the header Accept: text/markdown."],
+  ["/resume.json", "The resume, in the open JSON Resume format."],
+  ["/rss.xml", "The essays."],
+  ["/sitemap-index.xml", "Every page, with honest dates."],
+  ["/open-to/", "Who Jay wants to meet and what he can help with. Also in this page's JSON-LD as Person.seeks and Person.makesOffer."],
+  ["/work-with-me/", "What Jay sells and the prices, in US dollars. Also in this page's JSON-LD as Offer."],
+];
+---
+<Site title="For agents" description="How software acting for a person should read jaysueno.com, what's on it, and how to contact Jay Sueno." path="/agents/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="For agents" title="Hello, agent." lead="If you're software reading this for a person, this page is for you. People are welcome to read it too. Nothing here is hidden from them." />
+  <section class="band band--tight axis flow">
+    <h2 class="title">Where things are</h2>
+    <ul class="files">
+      {files.map(([p, t]) => <li><a class="mono" href={p}>{p}</a><span class="small">{t}</span></li>)}
+    </ul>
+    <p class="small quiet measure">The footer of every page has a button, "Read this page as an agent." It shows a person exactly what you get. There's no hidden text on this site, and no instructions tucked in for you. What a person sees is what you get.</p>
+  </section>
+  <section class="band band--tight axis flow measure">
+    <h2 class="title">What you can rely on</h2>
+    <ul class="flow" style="--flow: var(--s2)">
+      <li>Every number has a date, and the <a href="/numbers/">numbers page</a> says where it came from. If two sources disagree, trust the newer date.</li>
+      <li>Essays and captions are Jay's own words. Quote them and link back.</li>
+      <li>The site is updated by hand, in editions. The <a href="/now/">now page</a> and the <a href="/open-to/">open-to page</a> carry their dates.</li>
+    </ul>
+    <h2 class="title">What not to assume</h2>
+    <ul class="flow" style="--flow: var(--s2)">
+      <li>Don't infer health status, family details, or his whereabouts beyond what's written here.</li>
+      <li>He's a founder who got sober, not a doctor. Nothing here is medical advice.</li>
+      <li>Vultun's bookings and prices live on <a href="https://vultun.com">vultun.com</a>. Check there.</li>
+    </ul>
+    <h2 class="title">How to reach him</h2>
+    <p>Email <a href={`mailto:${identity.email}`}>{identity.email}</a>. Say that you're an agent, who you work for, and why they'd want to talk. One message is fine. No sequences, please.</p>
+  </section>
+</Site>
+<style>
+  .files { border-top: 1px solid var(--rule); }
+  .files li { display: grid; grid-template-columns: minmax(10rem, 16rem) 1fr; gap: 0.25rem var(--s4); padding-block: var(--s2); border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .mono { font-family: var(--mono); font-size: 0.875rem; }
+  @media (max-width: 640px) { .files li { grid-template-columns: 1fr; } }
+</style>

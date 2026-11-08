@@ -1,0 +1,15 @@
+---
+const { rows } = Astro.props;
+---
+<dl class="ledger">
+  {rows.map((r: { value: string; live?: boolean; label: string; note?: string; href?: string }) => (
+    <div class="ledger__row">
+      <dt class="ledger__value">{r.value}</dt>
+      <dd>
+        <span class="small">{r.label}</span>
+        {r.note && <span class="caption quiet num ledger__note">{r.href ? <a href={r.href}>{r.note}</a> : r.note}</span>}
+      </dd>
+    </div>
+  ))}
+</dl>
+<style>.ledger__note { display: block; margin-top: 0.15rem; }</style>

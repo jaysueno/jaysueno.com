@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+
+# The identity scan's term list must never ship, even if it is copied in by mistake.
+identity-terms.txt

@@ -1,0 +1,8 @@
+---
+import Photo from "./Photo.astro";
+const { id, alt, caption, ratio = "3-2", inset = false, sizes = inset ? "(min-width: 900px) 45vw, 100vw" : "100vw", position, widths } = Astro.props;
+---
+<figure class:list={["fig", `fig--${ratio}`, { "fig--inset": inset }]}>
+  <Photo id={id} alt={alt} sizes={sizes} position={position} widths={widths} />
+  {caption && <figcaption class="caption num">{caption}</figcaption>}
+</figure>

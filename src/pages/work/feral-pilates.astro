@@ -1,0 +1,38 @@
+---
+import Site from "../../layouts/Site.astro";
+import PageHead from "../../components/PageHead.astro";
+import Fig from "../../components/Fig.astro";
+import Photo from "../../components/Photo.astro";
+import Ledger from "../../components/Ledger.astro";
+import { utm } from "../../data/work-pages";
+const rows = [
+  { value: "3,506", label: "Pilates sessions to 1,520 guests in twelve months.", note: "October 2026. vultun.com/press", href: "https://vultun.com/press/" },
+  { value: "1 in 3", label: "Reformer guests come back.", note: "October 2026. vultun.com/press", href: "https://vultun.com/press/" },
+  { value: "5.0", label: "From 60 Google reviews.", note: "Read from Google, November 7, 2026", href: "https://vultun.com/press/" },
+  { value: "2,000+", label: "Classes taught.", note: "October 2026. vultun.com/press", href: "https://vultun.com/press/" },
+];
+---
+<Site title="Feral Pilates" description="Feral Pilates is the reformer and mat studio of the Vultun group in Siargao, led by Allegra De Borja, PTRP. It opened in 2025." path="/work/feral-pilates/" created="2026-11-07" updated="2026-11-07">
+  <PageHead kicker="The work" title="Feral Pilates" lead="Reformer and mat in Siargao, led by my partner and co-founder, Allegra De Borja, PTRP. Opened in 2025." />
+  <section class="band band--tight axis cols cols--text-photo">
+    <div class="flow measure">
+      <p class="kicker">Why it matters</p>
+      <h2 class="story">There is a wilderness within you.</h2>
+      <p>I started in the water. My body has a history now: two torn knees, a bad back, and a few other reminders that the ocean isn't always kind. So I spend more time looking after myself. Pilates, strength work, stretching, recovery.</p>
+      <p>Allegra is the one who knows how to teach it.</p>
+      <p class="landing">We are the first reformer studio on the island. We are also the only one led by certified and licensed people.</p>
+      <p><a class="ask" href={utm("https://vultun.com/feralpilates/", "work-feral")}>Book a class at Feral</a></p>
+      <figure class="fig fig--inset feral-cadillac">
+        <Photo id="feral-cadillac" alt="Allegra assessing a client beside the Cadillac at Feral Pilates." sizes="20rem" widths={[454]} />
+        <figcaption class="caption num">Allegra with a client at the Cadillac.</figcaption>
+      </figure>
+    </div>
+    <Fig id="feral-reformer" inset ratio="4-5" alt="Allegra standing on a reformer at the front of a group class at Feral Pilates, with the class following behind her and in the mirror." caption="Allegra leading a reformer class." widths={[480, 800]} />
+  </section>
+  <section class="band band--tight axis flow"><h2 class="title">In numbers</h2><Ledger rows={rows} /></section>
+</Site>
+<style>
+  .feral-cadillac { max-width: 20rem; margin-top: var(--s4); }
+  .feral-cadillac :global(img) { width: 100%; height: auto; }
+  .feral-cadillac figcaption { margin-top: var(--s1); }
+</style>

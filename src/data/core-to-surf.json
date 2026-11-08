@@ -1,0 +1,26 @@
+{
+  "_source": "A trimmed copy of the vultun.com data file for the Core to Surf retreat, taken 2026-11-08. Only the fields src/pages/work/vultun.astro reads.",
+  "name": "Core to Surf",
+  "tagline": "Paddle longer. Pop up cleaner. Ride with control.",
+  "descriptor": "A 3-day Pilates and surf retreat in Siargao",
+  "byline": "by Feral Pilates and Vultun",
+  "dates": {
+    "start": "2027-02-26",
+    "end": "2027-02-28"
+  },
+  "seats": {
+    "display": "Eight places"
+  },
+  "prices": {
+    "public": 55000,
+    "resident": 45000,
+    "next": 62000,
+    "deposit": 15000
+  },
+  "totalValue": 86250,
+  "guarantees": [
+    "The fit guarantee. After you reserve we talk for fifteen minutes. If either of us thinks these are not the right three days for you, your deposit comes back in full.",
+    "The ocean guarantee. If the sea takes a morning, you do not lose it. That morning moves into the studio, and you get a coached two-hour session at Jacking Horse, on us, any time in the next twelve months.",
+    "The progress guarantee. Come to all three days and do the work. If your coach cannot show you a change between day one and day three on the footage, we coach you at no charge until they can."
+  ]
+}

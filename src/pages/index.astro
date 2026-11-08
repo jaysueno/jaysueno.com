@@ -1,0 +1,294 @@
+---
+import { getImage } from "astro:assets";
+import Site from "../layouts/Site.astro";
+import Photo from "../components/Photo.astro";
+import Weeks from "../components/Weeks.astro";
+import Subscribe from "../components/Subscribe.astro";
+import { marks, nowWeek } from "../data/timeline";
+import { work } from "../data/work";
+import { daysSober, LAST_DRINK, PERSON_ID } from "../data/identity";
+import poster from "../assets/photos/wave-clip-poster.jpg";
+
+const posterImg = await getImage({ src: poster, width: 1200, format: "webp", quality: 66 });
+const lived = nowWeek();
+
+// The third-party video about Jay. Kept here because the Search Console contract test reads it.
+const videoNode = {
+  "@type": "VideoObject",
+  name: "Why Everyone is Talking About this Biohacking Studio in Siargao",
+  description: "Global Nomad Pass visits Vultun, Jay Sueno's biohacking studio in Siargao, Philippines.",
+  thumbnailUrl: "https://i.ytimg.com/vi/QQn2gsOPYWU/maxresdefault.jpg",
+  uploadDate: "2025-01-07T16:50:22-08:00",
+  url: "https://www.youtube.com/watch?v=QQn2gsOPYWU",
+  embedUrl: "https://www.youtube.com/embed/QQn2gsOPYWU",
+  about: { "@id": PERSON_ID },
+};
+const slides = [
+  ["slide-01", "Allow me to reintroduce myself. Jay Sueno."],
+  ["slide-02", "47 / Still starting. I'm 47. And apparently, I'm still just getting started. Surfing at 33. Sober at 40. A father at 45."],
+  ["slide-03", "The old dream. I wanted a big life. A mansion. Millions. World travel. Lavish parties. A beautiful wife and family. Cool friends everywhere. Subtle, I know."],
+  ["slide-04", "Stuck. The dream stayed. I stopped moving. Alcohol and depression made my world smaller. Other people seemed to be moving forward. I was still at the bar."],
+  ["slide-05", "40 / Sober. At 40, I stopped drinking. Sleep came back. So did focus. I trained. Read. Meditated. Went back to school. Most importantly, I started doing the things I'd spent years saying I'd do tomorrow."],
+  ["slide-07", "The cost. The dream and the bill can arrive on the same afternoon. Half-finished Pilates studio. Contractors calling. Bills and payroll. Customers still to find. Outside, waves and sunset. At home, our daughter had been waiting all day."],
+  ["slide-09", "The Long Paddle. I still want to build. I just don't want to miss my life doing it. Business, family, health. Technology, nature, spirit. This is me working that out in public, from the middle of it."],
+];
+---
+<Site
+  title="Jay Sueno: most of a good life is the paddle"
+  titleSuffix={false}
+  description="Jay Sueno is the founder of Vultun on Siargao, a surf island in the Philippines. Forty-seven, seven years sober, a father, and the writer of The Long Paddle."
+  path="/"
+  pageType="ProfilePage"
+  overPhoto
+  created="2026-07-04"
+  updated="2026-11-07"
+  nodes={[videoNode]}
+>
+  <div class="stack">
+    <section class="page hero" aria-labelledby="hero-h">
+      <Photo id="paddle-overhead" alt="A lone surfer paddling on dark green water, seen from directly above, with a few orange leaves floating around him." priority class="page__photo hero__photo" position="72% 50%" />
+      <div class="page__copy page__copy--bottom flow" style="--flow: var(--s3)">
+        <h1 id="hero-h">
+          <span class="kicker hero__byline">Jay Sueno</span>
+          <span class="cover lines hero__cover"><span>Allow me to</span><span>reintroduce</span><span>myself.</span></span>
+        </h1>
+        <p class="lead measure hero__lede">I run Vultun and Feral on Siargao, a surf island in the southern Philippines. Forty-seven, seven years sober, still paddling out.</p>
+      </div>
+      <p class="page__caption">Salvacion, Siargao. October 7, 2026, 4:35 PM.</p>
+    </section>
+
+    <section class="page scrim-top" aria-label="Still starting">
+      <Photo id="tide-pool" alt="Jay and his daughter standing in a shallow tide pool at dusk." class="page__photo" position="50% 54%" />
+      <div class="page__copy page__copy--top flow" style="--flow: var(--s3)">
+        <p class="kicker">47 / Still starting</p>
+        <h2 class="story lines"><span>I'm 47.</span><span>And apparently, I'm still</span><span>just getting started.</span></h2>
+        <p class="lead lines"><span>Surfing at 33.</span><span>Sober at 40.</span><span>A father at 45.</span></p>
+      </div>
+      <p class="page__caption">With my daughter. September 3, 2026.</p>
+    </section>
+
+    <section class="page page--split" aria-label="Stuck">
+      <div class="split__copy flow" style="--flow: var(--s3)">
+        <p class="kicker">Stuck</p>
+        <h2 class="story lines"><span>The dream stayed.</span><span>I stopped moving.</span></h2>
+        <p class="lead">Alcohol and depression made my world smaller. Other people seemed to be moving forward.</p>
+        <p class="landing">I was still at the bar.</p>
+      </div>
+      <div class="split__photo"><Photo id="at-the-bar" alt="Jay in sunglasses and a white tank top at a roadside table, holding a large drink with a salted rim, before he got sober." sizes="(min-width: 860px) 50vw, 100vw" position="50% 40%" /><p class="page__caption">August 17, 2016.</p></div>
+    </section>
+
+    <section class="page page--solid solid-swell" aria-label="Sober">
+      <div class="page__copy page__copy--middle flow" style="--flow: var(--s3)">
+        <p class="kicker">40 / Sober</p>
+        <h2 class="story story--big">At 40, I stopped drinking.</h2>
+        <p class="lead lines"><span>Sleep came back.</span><span>So did focus.</span><span>I trained. Read. Meditated.</span><span>Went back to school.</span></p>
+        <p class="landing measure">Most importantly, I started doing the things I'd spent years saying I'd do tomorrow.</p>
+        <p class="caption num">Today is day <span data-days-sober={LAST_DRINK}>{daysSober().toLocaleString("en-US")}</span>.</p>
+      </div>
+    </section>
+
+    <section class="page page--split" aria-label="The life">
+      <div class="split__copy flow" style="--flow: var(--s3)">
+        <p class="kicker">The life</p>
+        <h2 class="story lines"><span>Some of the life</span><span>I used to imagine</span><span>became ordinary Tuesday.</span></h2>
+        <p class="lead">Our daughter growing up in front of me. Surfing. Nature. Businesses we believe in.</p>
+        <p class="landing">A life I once imagined from somewhere else.</p>
+      </div>
+      <div class="split__photo"><Photo id="daughter-water" alt="Jay laughing in clear green water, holding up his baby daughter, with a thatched hut on stilts behind them." sizes="(min-width: 860px) 50vw, 100vw" position="50% 60%" /><p class="page__caption">September 24, 2025, 5:20 PM.</p></div>
+    </section>
+
+    <section class="page page--solid solid-terra" aria-label="The cost">
+      <div class="page__copy page__copy--middle flow" style="--flow: var(--s3)">
+        <p class="kicker">The cost</p>
+        <h2 class="story story--big lines"><span>The dream and the bill</span><span>can arrive on</span><span>the same afternoon.</span></h2>
+        <p class="lead lines"><span>Half-finished Pilates studio.</span><span>Contractors calling.</span><span>Bills and payroll.</span><span>Customers still to find.</span><span>Outside, waves and sunset.</span></p>
+        <p class="landing measure">At home, our daughter had been waiting all day.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="wave" aria-labelledby="wave-h">
+    <div class="wave__clip">
+      <video data-autoplay muted loop playsinline preload="none" poster={posterImg.src} width="1920" height="1080" aria-label="Nine seconds of a surfer riding a small clean wave, with a rock island behind him.">
+        {/* The browser plays the first source it can decode. Phones and small tablets get 720p, wider screens get 1080p. AV1 is about a third smaller; H.264 is the fallback that plays everywhere. */}
+        <source src="/media/wave-9s-720-av1.mp4" media="(max-width: 899px)" type='video/mp4; codecs="av01.0.05M.08"' />
+        <source src="/media/wave-9s-720.mp4" media="(max-width: 899px)" type="video/mp4" />
+        <source src="/media/wave-9s-1080-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
+        <source src="/media/wave-9s-1080.mp4" type="video/mp4" />
+      </video>
+      <p class="caption wave__cap num">Salvacion, Siargao. October 7, 2026. This clip runs 9.86 seconds.</p>
+    </div>
+    <div class="axis wave__copy flow">
+      <p class="kicker">The wave</p>
+      <h2 id="wave-h" class="story">The wave is ten seconds.</h2>
+      <p class="lead measure">The paddle is the part nobody films: the slow-season spreadsheet, the morning practice, the staff meeting, the broken pump, the day you back away so your kid can swim.</p>
+    </div>
+  </section>
+
+  <section class="band weeks-band" aria-labelledby="weeks-h">
+    <div class="axis flow">
+      <p class="kicker">The long paddle</p>
+      <h2 id="weeks-h" class="story measure-wide">Most of a good life is the paddle.</h2>
+      <p class="lead measure">Every dot is one week of my life. <span class="num">{lived.toLocaleString("en-US")}</span> so far. Thirteen of them made the list below. Eleven of those thirteen came on or after the day I quit. The rest is the paddle.</p>
+      <p class="landing measure">"My goal is to surf until 100."</p>
+      <div class="weeks-wrap"><Weeks /></div>
+      <ul class="legend caption" aria-label="What the colors mean" data-agent="skip">
+        <li><i class="k k-before"></i>Being a kid</li>
+        <li><i class="k k-drink"></i>25 years of drinking, 8 to 12 a day</li>
+        <li><i class="k k-sober"></i>Sober</li>
+        <li><i class="k k-ahead"></i>Still ahead, I hope</li>
+        <li><i class="k k-leaf"></i>The thirteen</li>
+      </ul>
+      <ol class="marks">
+        {marks.map((m) => (
+          <li data-mark={`${m.date}. ${m.text}`}><span class="caption num">{m.date}</span><span class="small">{m.text}</span></li>
+        ))}
+      </ol>
+      <form class="your-weeks" data-your-weeks data-agent="skip" novalidate>
+        <label for="your-year" class="title">Now yours.</label>
+        <p class="small quiet">Type the year you were born. It stays in this browser.</p>
+        <div class="your-weeks__row">
+          <input id="your-year" name="year" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="1985" autocomplete="off" />
+          <button type="submit">Show me</button>
+          <button type="reset" class="your-weeks__reset">Back to mine</button>
+        </div>
+        <p class="small" data-your-note aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="band band--tight" aria-labelledby="work-h">
+    <div class="axis flow">
+      <p class="kicker">The work</p>
+      <h2 id="work-h" class="story">Which paddle is this about, and what did it cost?</h2>
+      <ul class="work-index">
+        {work.map((w) => (
+          <li>
+            <a href={`/work/${w.slug}/`} class="work-index__link">
+              <span class="work-index__name">{w.name}</span>
+              <span class="work-index__kind small">{w.kind}</span>
+              <span class="work-index__stat caption num">{w.stat}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p><a class="ask" href="/work/">All of the work, and what came before the island</a></p>
+    </div>
+  </section>
+
+  <section class="paper band" aria-labelledby="write-h">
+    <div class="axis writing-grid">
+      <div class="flow">
+        <p class="kicker">The Long Paddle</p>
+        <h2 id="write-h" class="story">Field notes on business, family, health, and becoming in Siargao.</h2>
+        <Subscribe source="home-writing" />
+      </div>
+      <ol class="essay-list">
+        <li><a href="/writing/the-spear-and-the-net/"><span class="caption quiet num">July 24, 2026</span><span class="title">The Spear and the Net</span><span class="small">"Cut like a hunter. Build like a fisherman."</span></a></li>
+        <li><a href="/writing/a-prayer-for-ember/"><span class="caption quiet num">July 30, 2026</span><span class="title">A Prayer for Ember</span><span class="small">"Memory is imperfect, time moves fast, and one day I want you to know what your father hoped for you."</span></a></li>
+        <li><a href="/writing/always-be-ready/"><span class="caption quiet num">July 15, 2026</span><span class="title">Always Be Ready: Life in Siargao</span><span class="small">"For me, gout reminded me of a life I chose to leave for one I chose to move toward."</span></a></li>
+        <li><a href="/writing/lets-begin-again/"><span class="caption quiet num">January 7, 2026</span><span class="title">Let's Begin Again..</span><span class="small">"Why would anyone trust a wellness guy who's slipping himself?"</span></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band--tight strip-band" aria-labelledby="strip-h">
+    <div class="axis flow" style="--flow: var(--s3)">
+      <p class="kicker">Field notes</p>
+      <h2 id="strip-h" class="title">The post this site started from. October 15, 2026.</h2>
+    </div>
+    <ul class="strip" tabindex="0" aria-label="Instagram carousel, slide by slide">
+      {slides.map(([id, text]) => (
+        <li><a href="https://www.instagram.com/p/DegSDQTE8A-/" rel="me"><Photo id={id} alt={text} sizes="(min-width: 860px) 26vw, 72vw" widths={[480, 864]} /></a></li>
+      ))}
+    </ul>
+    <div class="axis"><a class="ask" href="/field-notes/">More field notes</a></div>
+  </section>
+
+  <section class="page scrim-flat-44 close" aria-labelledby="close-h">
+    <Photo id="sunset-board" alt="Seen from a drone at sunset: a long red surfboard carrying a parent and small child across calm water toward a line of palms." class="page__photo" position="50% 70%" />
+    <p class="page__caption">September 25, 2026, 4:54 PM.</p>
+    <div class="page__copy page__copy--middle flow">
+      <p class="kicker">Say hello</p>
+      <h2 id="close-h" class="story">If you're still ambitious, still unfinished, and still convinced there's more life to live, you're probably who I'm writing for.</h2>
+      <Subscribe source="home-close" label="Start here." />
+      <p><a class="ask" href="/open-to/">Or tell me where you're stuck. I read every one.</a></p>
+      <p class="landing">I want to keep finding out.</p>
+    </div>
+  </section>
+</Site>
+
+<script>
+  // The clip plays only while on screen, never on Save-Data, never against reduced motion.
+  const saver = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLVideoElement>("video[data-autoplay]").forEach((v) => {
+    if (saver || calm) { v.controls = true; return; }
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) v.play().catch(() => { v.controls = true; });
+      else v.pause();
+    }, { threshold: 0.35 }).observe(v);
+  });
+</script>
+
+<style>
+  .hero__byline { display: block; margin-bottom: var(--s3); letter-spacing: 0.11em; }
+  .hero__cover { display: block; }
+  .hero__lede { color: var(--color-text); }
+  .hero__photo { animation: drift 40s var(--ease) both; }
+  @keyframes drift { from { transform: scale(1.06); } to { transform: scale(1); } }
+
+  .page--split { background: var(--color-bg); }
+  .split__copy { padding: clamp(5rem, 11vh, 8rem) var(--gutter) var(--s5) var(--axis); align-self: center; }
+  .split__photo { position: relative; min-height: 62svh; }
+  .split__photo :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .split__photo::after { content: ""; position: absolute; inset: auto 0 0 0; height: 22%; background: linear-gradient(to top, rgb(0 0 0 / 0.5), rgb(0 0 0 / 0)); pointer-events: none; }
+  .split__photo .page__caption { z-index: 1; }
+  @media (min-width: 860px) {
+    .page--split { grid-template-columns: 1fr 1fr; }
+    .split__photo { min-height: 100%; }
+  }
+  .solid-swell { background: var(--swell); }
+  .solid-terra { background: var(--color-accentSecondary); }
+
+  .wave { background: var(--color-bg); position: relative; z-index: 2; }
+  .wave__clip video { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--color-bgDeep); }
+  .wave__cap { padding: var(--s2) var(--gutter) 0 var(--axis); }
+  .wave__copy { padding-block: var(--s6) 0; --flow: var(--s3); }
+
+  .weeks-band { position: relative; z-index: 2; background: var(--color-bg); }
+  .weeks-wrap { margin-top: var(--s5); }
+  .legend { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin-top: var(--s3); }
+  .legend li { display: inline-flex; align-items: center; gap: 0.5em; }
+  .k { width: 0.625rem; height: 0.625rem; border-radius: 50%; display: inline-block; }
+  .k-before { background: rgb(216 211 202 / 0.38); } .k-drink { background: #A65B3C; } .k-sober { background: #F2EDE2; }
+  .k-ahead { background: rgb(216 211 202 / 0.17); } .k-leaf { background: var(--color-accent); }
+  .marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 0 var(--s5); margin-top: var(--s5); border-top: 1px solid var(--rule); }
+  .marks li { display: grid; gap: 0.15rem; padding-block: var(--s2); border-bottom: 1px solid var(--rule); transition: color 200ms; }
+  .marks li:global(.is-on) { color: var(--color-accent); }
+  .your-weeks { margin-top: var(--s6); display: grid; gap: var(--s2); max-width: 40rem; }
+  .your-weeks__row { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: baseline; }
+  .your-weeks input { width: 7ch; background: none; border: 0; border-bottom: 1px solid var(--color-primary); padding: 0.4rem 0; font-size: var(--t-title); font-family: var(--display); }
+  .your-weeks button { background: none; border: 0; padding: 0; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; }
+  .your-weeks__reset { font-weight: 400 !important; opacity: 0.7; }
+
+  .work-index { margin-top: var(--s5); border-top: 1px solid var(--rule); }
+  .work-index li { border-bottom: 1px solid var(--rule); }
+  .work-index__link { display: grid; grid-template-columns: minmax(14rem, 1.1fr) 1.4fr; gap: 0.25rem var(--s4); padding-block: var(--s4); text-decoration: none; align-items: baseline; }
+  .work-index__name { font-family: var(--display); font-size: var(--t-story); line-height: 1.05; grid-row: span 2; transition: color 200ms var(--ease); }
+  .work-index__link:hover .work-index__name { color: var(--color-accent); }
+  .work-index__link:hover { color: inherit; }
+  @media (max-width: 720px) { .work-index__link { grid-template-columns: 1fr; } }
+
+  .writing-grid { display: grid; gap: var(--s6) var(--s6); }
+  @media (min-width: 1000px) { .writing-grid { grid-template-columns: 1.05fr 1fr; } }
+  .essay-list { border-top: 1px solid var(--rule); }
+  .essay-list li { border-bottom: 1px solid var(--rule); }
+  .essay-list a { display: grid; gap: 0.3rem; padding-block: var(--s3); text-decoration: none; }
+
+  .strip-band { position: relative; }
+  .strip { display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x proximity; padding: var(--s4) var(--gutter) var(--s4) var(--axis); scrollbar-width: thin; }
+  .strip li { flex: 0 0 clamp(16rem, 26vw, 25rem); scroll-snap-align: start; }
+  .strip :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+  .close { position: relative; z-index: 2; }
+</style>

@@ -1,0 +1,107 @@
+---
+import SEOHead from "../vendor/SEOHead.astro";
+import SchemaMarkup from "../vendor/SchemaMarkup.astro";
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { SITE, PERSON_ID, WEBSITE_ID, identity, personNode } from "../data/identity";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  /** Absolute or site-relative share image. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
+  /** Extra schema.org nodes for this page. */
+  nodes?: Record<string, unknown>[];
+  pageType?: string;
+  updated?: string;
+  created?: string;
+  /** Nav floats over a full-bleed photo. */
+  overPhoto?: boolean;
+  /** false = the title is used exactly as written, with no suffix. */
+  titleSuffix?: boolean;
+  noIndex?: boolean;
+}
+const {
+  title, description, path, ogImage = "/og-image.jpg", ogImageAlt = "A lone surfer paddling on dark water, seen from directly above.", ogType = "website", nodes = [],
+  pageType = "WebPage", updated, created, overPhoto = false, titleSuffix = true, noIndex = false,
+} = Astro.props;
+
+const canonical = new URL(path, SITE).href;
+const og = new URL(ogImage, SITE).href;
+
+const graph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    personNode,
+    {
+      "@type": "WebSite",
+      "@id": WEBSITE_ID,
+      name: identity.name,
+      url: `${SITE}/`,
+      inLanguage: "en",
+      publisher: { "@id": PERSON_ID },
+      about: { "@id": PERSON_ID },
+    },
+    {
+      "@type": pageType,
+      "@id": `${canonical}#webpage`,
+      url: canonical,
+      name: titleSuffix ? `${title} | ${identity.name}` : title,
+      description,
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": PERSON_ID },
+      inLanguage: "en",
+      ...(pageType === "ProfilePage" ? { mainEntity: { "@id": PERSON_ID } } : {}),
+      ...(created ? { dateCreated: created } : {}),
+      ...(updated ? { dateModified: updated } : {}),
+    },
+    ...nodes,
+  ],
+};
+// A page that isn't indexed (the 404) has no Markdown twin to point at.
+const mdPath = noIndex ? null : `${path.endsWith("/") ? path : `${path}/`}index.md`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      // Remember the first link tags of a visit (utm_*), so a message sent from another page
+      // still records which profile or post brought the visitor. Session only; nothing else kept.
+      (function(){try{var q=new URLSearchParams(location.search),k=["utm_source","utm_medium","utm_campaign","utm_term","utm_content"],o={},any=false;k.forEach(function(n){var v=q.get(n);if(v){o[n]=v;any=true;}});if(any&&!sessionStorage.getItem("js_utm")){o.landing_page=location.pathname;sessionStorage.setItem("js_utm",JSON.stringify(o));}}catch(e){}})();
+    </script>
+    <SEOHead
+      title={title}
+      description={description}
+      siteName={identity.name}
+      fontImports=""
+      canonical={canonical}
+      ogImage={og}
+      ogImageWidth={1200}
+      ogImageHeight={630}
+      ogImageType="image/jpeg"
+      ogImageAlt={ogImageAlt}
+      ogType={ogType}
+      themeColor="#0B1413"
+      titleSuffix={titleSuffix}
+      noIndex={noIndex}
+    />
+    <SchemaMarkup schemas={[graph]} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Jay Sueno: writing" href="/rss.xml" />
+    {mdPath && <link rel="alternate" type="text/markdown" title="This page as Markdown" href={mdPath} />}
+    <link rel="help" type="text/plain" title="llms.txt" href="/llms.txt" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav overPhoto={overPhoto} current={path} />
+    <main id="main"><slot /></main>
+    <Footer mdPath={mdPath} />
+  </body>
+</html>
